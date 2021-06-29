@@ -11,6 +11,7 @@
   },
   "private": true,
   "dependencies": {
+    "@angular-extensions/elements": "^11.0.1",
     "@angular/animations": "~11.2.14",
     "@angular/common": "~11.2.14",
     "@angular/compiler": "~11.2.14",
@@ -19,6 +20,8 @@
     "@angular/platform-browser": "~11.2.14",
     "@angular/platform-browser-dynamic": "~11.2.14",
     "@angular/router": "~11.2.14",
+    "auth0-js": "^9.16.2",
+    "auth0-lock": "^11.30.3",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.11.3"
