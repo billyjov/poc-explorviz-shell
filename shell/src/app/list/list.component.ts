@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListComponent implements OnInit {
   elementUrl = 'assets/ember-app/billy.js';
+  // elementUrl = 'assets/ember-app/billy-baaa55aec3d5c1545ad35ff960d77df5.js';
   constructor() {}
 
   ngOnInit(): void {}

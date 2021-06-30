@@ -11,7 +11,7 @@
     "test": "tests"
   },
   "scripts": {
-    "build": "ember build --environment=production",
+    "build:prod": "ember build --environment=production",
     "lint": "npm-run-all --aggregate-output --continue-on-error --parallel 'lint:!(fix)'",
     "lint:fix": "npm-run-all --aggregate-output --continue-on-error --parallel lint:*:fix",
     "lint:hbs": "ember-template-lint .",
@@ -21,7 +21,8 @@
     "start": "ember serve",
     "test": "npm-run-all lint test:*",
     "test:ember": "ember test",
-    "build:all": "npm run build && npm run copy:bundles",
+    "build": "ember build",
+    "build:all": "npm run build:prod && npm run copy:bundles",
     "copy:bundles": "copyfiles -f dist/assets/landscapes.js dist/assets/landscapes.css ../shell/src/assets/landscapes"
   },
   "devDependencies": {

@@ -11,6 +11,7 @@ import { LandscapesComponent } from './landscapes/landscapes.component';
 import { LoginComponent } from './login/login.component';
 import { ShellOutletModule } from './shell-outlet/shell-outlet.module';
 import { CallbackComponent } from './callback/callback.component';
+import { VisualizationComponent } from './visualization/visualization.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { CallbackComponent } from './callback/callback.component';
     ListComponent,
     LandscapesComponent,
     LoginComponent,
-    CallbackComponent
+    CallbackComponent,
+    VisualizationComponent
   ],
   imports: [
     BrowserModule,

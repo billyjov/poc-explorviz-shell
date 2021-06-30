@@ -5,6 +5,7 @@ import { ListComponent } from './list/list.component';
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './shared/guards/auth.guard';
 import { ShellOutletComponent } from './shell-outlet/shell-outlet/shell-outlet.component';
+import { VisualizationComponent } from './visualization/visualization.component';
 
 const routes: Routes = [
   {
@@ -45,6 +46,16 @@ const routes: Routes = [
     path: '',
     pathMatch: 'full',
     redirectTo: 'landscapes',
+  },
+  {
+    path: 'visualization',
+    component: ShellOutletComponent,
+    children: [
+      {
+        path: '',
+        component: VisualizationComponent,
+      },
+    ],
   },
 ];
 

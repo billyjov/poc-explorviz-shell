@@ -10,10 +10,10 @@ module.exports = function (defaults) {
 
     storeConfigInMeta: false,
 
-    'ember-bootstrap': {
-      bootstrapVersion: 4,
-      importBootstrapCSS: true,
-    },
+    // 'ember-bootstrap': {
+    //   bootstrapVersion: 4,
+    //   importBootstrapCSS: true,
+    // },
     sassOptions: {
       implementation: sass,
     },
@@ -56,14 +56,14 @@ module.exports = function (defaults) {
   // along with the exports of each module as its value.
 
   // micro frontend single-spa module.
-  app.import('node_modules/single-spa-ember/amd/single-spa-ember.js', {
-    using: [
-      {
-        transformation: 'amd',
-        as: 'single-spa-ember',
-      },
-    ],
-  });
+  // app.import('node_modules/single-spa-ember/amd/single-spa-ember.js', {
+  //   using: [
+  //     {
+  //       transformation: 'amd',
+  //       as: 'single-spa-ember',
+  //     },
+  //   ],
+  // });
   // app.import('node_modules/bootstrap/dist/js/bootstrap.min.js');
 
   return app.toTree();
