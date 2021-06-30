@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
        .checkLogin()
        .then((res) => {
          console.log('auth res works: ', res)
-        //  this.router.navigateByUrl(environment.auth0.routeAfterLogin);
+         return this.router.navigateByUrl(environment.auth0.routeAfterLogin);
        })
        .catch(() => this.authService.login());
   }

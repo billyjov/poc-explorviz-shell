@@ -38,9 +38,12 @@ export class AuthService {
     this.auth0Options
   );
   constructor(private router: Router) {
-    this.lock.on('authenticated', (authResult: any) => {
+    this.lock.on('authenticated', async (authResult: any) => {
       console.log('Nice, it worked!: ', authResult);
-      this.router.navigate(['/']); // go to the home route
+      await this.setUser(authResult.accessToken);
+      // TODO: ask for access token
+      sessionStorage.setItem('accessToken', authResult.accessToken);
+      // this.router.navigate(['/']); // go to the home route
       // ...finish implementing authenticated
     });
     this.lock.on('authorization_error', (error) => {

@@ -1,0 +1,34 @@
+<!-- <button type="button" (click)="logout()">Logout</button> -->
+<!-- <a [routerLink]="['/list']">Go to list</a> <br><br> -->
+<!-- <a [routerLink]="['/landscapes']">Go to landscapes</a> -->
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">
+    <img style="height: 30px"
+      src="/assets/img/explorviz-30px.png" alt="ExplorViz"
+      draggable="false">
+  </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse"
+    data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
+    aria-expanded="false" aria-label="Toggle navigation" (click)="isNavbarCollapsed = !isNavbarCollapsed">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup" [ngbCollapse]="isNavbarCollapsed">
+    <div class="navbar-nav mr-auto">
+      <a class="nav-item nav-link" [routerLink]="['/landscapes']" routerLinkActive="active">
+        Landscapes
+        <span class="sr-only">(current)</span>
+      </a>
+      <a class="nav-item nav-link" [routerLink]="['/list']" routerLinkActive="active">List</a>
+      <a class="nav-item nav-link" href="#" routerLinkActive="active">Pricing</a>
+      <a class="nav-item nav-link disabled" href="#">Disabled</a>
+    </div>
+    <div id="navbar-user-options" class="btn-group pointer-events-all">
+      <button class="btn btn-outline-info" type="button" (click)="logout()">
+        Logout
+      </button>
+    </div>
+  </div>
+</nav>
+
+<router-outlet></router-outlet>
