@@ -1,7 +1,3 @@
-<!-- <button type="button" (click)="logout()">Logout</button> -->
-<!-- <a [routerLink]="['/list']">Go to list</a> <br><br> -->
-<!-- <a [routerLink]="['/landscapes']">Go to landscapes</a> -->
-
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" href="#">
     <img style="height: 30px" src="/assets/img/explorviz-30px.png"
@@ -17,15 +13,21 @@
     [ngbCollapse]="isNavbarCollapsed">
     <div class="navbar-nav mr-auto">
       <a class="nav-item nav-link" [routerLink]="['/landscapes']"
-        routerLinkActive="active">
+        routerLinkActive="active" (click)="navigateToRoute('/landscapes')">
         Landscapes
         <span class="sr-only">(current)</span>
       </a>
       <a class="nav-item nav-link" [routerLink]="['/list']"
-        routerLinkActive="active">List</a>
+        routerLinkActive="active" (click)="navigateToRoute('/list')">
+        List
+      </a>
       <a class="nav-item nav-link" [routerLink]="['/visualization']"
-        routerLinkActive="active">visualization</a>
-      <a class="nav-item nav-link disabled" href="#">Disabled</a>
+        routerLinkActive="active">
+        visualization
+      </a>
+      <a class="nav-item nav-link disabled" href="#">
+        Disabled
+      </a>
     </div>
     <div id="navbar-user-options" class="btn-group pointer-events-all">
       <button class="btn btn-outline-info" type="button" (click)="logout()">

@@ -6,19 +6,15 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ListComponent } from './list/list.component';
-import { LandscapesComponent } from './landscapes/landscapes.component';
 import { LoginComponent } from './login/login.component';
-import { ShellOutletModule } from './shell-outlet/shell-outlet.module';
 import { CallbackComponent } from './callback/callback.component';
 import { VisualizationComponent } from './visualization/visualization.component';
+import { ShellOutletModule } from './shell-outlet/shell-outlet.module';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    ListComponent,
-    LandscapesComponent,
     LoginComponent,
     CallbackComponent,
     VisualizationComponent
@@ -35,3 +31,4 @@ import { VisualizationComponent } from './visualization/visualization.component'
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+

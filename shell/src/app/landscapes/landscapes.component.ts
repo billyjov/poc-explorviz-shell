@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { ScriptLoaderService } from '../script-loader.service';
 
 @Component({
   selector: 'app-landscapes',
@@ -7,9 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LandscapesComponent implements OnInit {
   public elementUrl = 'assets/landscapes/landscapes.js';
-  // elementUrl = 'assets/ember-app/billy.js';
 
-  constructor() {}
+  constructor(private router: Router) {}
 
-  ngOnInit(): void {}
+  ngOnInit() {
+    // this.router.navigate(['/landscapes']).then(() => {
+    //   window.location.reload();
+    // });
+  }
 }

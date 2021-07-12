@@ -10,10 +10,10 @@ module.exports = function (defaults) {
 
     storeConfigInMeta: false,
 
-    // 'ember-bootstrap': {
-    //   bootstrapVersion: 4,
-    //   importBootstrapCSS: true,
-    // },
+    'ember-bootstrap': {
+      bootstrapVersion: 4,
+      importBootstrapCSS: true,
+    },
     sassOptions: {
       implementation: sass,
     },

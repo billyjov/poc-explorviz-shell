@@ -25,4 +25,10 @@ export class ShellOutletComponent implements OnInit {
     this.authService.logout();
     this.router.navigateByUrl('login');
   }
+
+  public navigateToRoute(path: string): void {
+    this.router.navigate([path]).then(() => {
+      window.location.reload();
+    })
+  }
 }

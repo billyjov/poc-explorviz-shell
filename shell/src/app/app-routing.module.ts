@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LandscapesComponent } from './landscapes/landscapes.component';
-import { ListComponent } from './list/list.component';
+
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './shared/guards/auth.guard';
 import { ShellOutletComponent } from './shell-outlet/shell-outlet/shell-outlet.component';
@@ -15,7 +14,8 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: ListComponent,
+        loadChildren: () =>
+          import('./list/list.module').then((m) => m.ListModule),
         canActivate: [AuthGuard],
       },
     ],
@@ -27,7 +27,10 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: LandscapesComponent,
+        loadChildren: () =>
+          import('./landscapes/landscapes.module').then(
+            (m) => m.LandscapesModule
+          ),
         canActivate: [AuthGuard],
       },
     ],
@@ -38,12 +41,6 @@ const routes: Routes = [
   },
   {
     path: 'callback',
-    pathMatch: 'full',
-    redirectTo: 'landscapes',
-    // component: CallbackComponent
-  },
-  {
-    path: '',
     pathMatch: 'full',
     redirectTo: 'landscapes',
   },
@@ -60,7 +57,9 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  imports: [
+    RouterModule.forRoot(routes, { relativeLinkResolution: 'corrected' }),
+  ],
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
