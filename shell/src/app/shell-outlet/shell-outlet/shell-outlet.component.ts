@@ -28,7 +28,8 @@ export class ShellOutletComponent implements OnInit {
 
   public navigateToRoute(path: string): void {
     this.router.navigate([path]).then(() => {
-      window.location.reload();
-    })
+      window.location.href =
+        window.location.protocol + '//' + window.location.host + path;
+    });
   }
 }
