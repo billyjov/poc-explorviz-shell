@@ -8,9 +8,11 @@ import Route from '@ember/routing/route';
  */
 export default class IndexRoute extends Route {
   beforeModel(transition: any) {
-    console.log('============ before model index landscape: ================');
     super.beforeModel(transition);
-    // this.replaceWith('landscapes/');
-    this.transitionTo('landscapes');
+    if (!sessionStorage.getItem('accessToken')) {
+      this.transitionTo('landscapes-login');
+    } else {
+      this.transitionTo('landscapes');
+    }
   }
 }

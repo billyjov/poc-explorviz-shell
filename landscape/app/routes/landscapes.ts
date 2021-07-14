@@ -24,13 +24,10 @@ export default class Landscapes extends Route {
     // let uId = this.auth.user?.sub;
     let uId = JSON.parse(sessionStorage.getItem('user') as string)?.sub;
 
-    if (!uId) {
-      return Promise.reject(new Error('User profile not set'));
-    }
+    // if (!uId) {
+    //   return Promise.reject(new Error('User profile not set'));
+    // }
 
-    const a = sessionStorage.getItem('user') as string;
-
-    console.log('==== USER UID ===== ', JSON.parse(a).sub);
     uId = encodeURI(uId);
 
     return new Promise<any>((resolve, reject) => {
@@ -43,7 +40,6 @@ export default class Landscapes extends Route {
         .then(async (response: Response) => {
           if (response.ok) {
             const tokens = (await response.json()) as LandscapeToken[];
-            console.log('tokens from backend: ', tokens);
             resolve(tokens);
           } else {
             reject();
@@ -55,12 +51,9 @@ export default class Landscapes extends Route {
 
   afterModel(landscapeTokens: LandscapeToken[]) {
     const currentToken = this.tokenService.token;
-    console.log('current token ===: ', currentToken);
-    console.log('current token list ===: ', landscapeTokens);
     const tokenCandidates = landscapeTokens.filter(
       (token) => token.value === currentToken?.value
     );
-    console.log('token candidates ===: ', tokenCandidates);
     if (tokenCandidates.length > 0) {
       this.tokenService.setToken(tokenCandidates[0]);
     } else {

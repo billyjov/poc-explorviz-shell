@@ -26,6 +26,14 @@ module.exports = function (defaults) {
         'node_modules/octicons/build/svg',
       ],
     },
+    // auth0 globals config.
+    autoImport: {
+      webpack: {
+        node: {
+          global: true,
+        },
+      },
+    },
     emberCliConcat: {
       enabled: true,
       outputDir: 'assets',
@@ -65,6 +73,7 @@ module.exports = function (defaults) {
   //   ],
   // });
   // app.import('node_modules/bootstrap/dist/js/bootstrap.min.js');
+  app.import('node_modules/auth0-js/build/auth0.js');
 
   return app.toTree();
 };
