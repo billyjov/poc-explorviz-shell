@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light">
   <a class="navbar-brand" href="#">
     <img style="height: 30px" src="/assets/img/explorviz-30px.png"
       alt="ExplorViz" draggable="false">
@@ -11,7 +11,7 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup"
     [ngbCollapse]="isNavbarCollapsed">
-    <div class="navbar-nav mr-auto">
+    <!-- <div class="navbar-nav mr-auto">
       <a class="nav-item nav-link" [routerLink]="['/landscapes']"
         routerLinkActive="active" (click)="navigateToRoute('/landscapes')">
         Landscapes
@@ -28,11 +28,29 @@
       <a class="nav-item nav-link disabled" href="#">
         Disabled
       </a>
-    </div>
-    <div id="navbar-user-options" class="btn-group pointer-events-all">
-      <button class="btn btn-outline-info" type="button" (click)="logout()">
-        Logout
-      </button>
+    </div> -->
+    <div id="navbar-user-options" class="btn-group ml-auto">
+      <div ngbDropdown placement="bottom-left">
+        <a class="dropdown-toggle d-flex align-items-center" ngbDropdownToggle
+          role="button">
+          <img [src]="user.picture" class="img-avatar">
+        </a>
+        <div ngbDropdownMenu aria-labelledby="dropdownConfig"
+          class="menu-dropdown-position">
+          <div class="dropdown-header">
+            <div>
+              <strong class="truncate-text">
+                {{ user.nickname }}
+              </strong>
+            </div>
+            <span class="truncate-text">
+              {{ user.sub }}
+            </span>
+          </div>
+          <hr class="c-divider">
+          <button ngbDropdownItem (click)="logout()">Logout</button>
+        </div>
+      </div>
     </div>
   </div>
 </nav>

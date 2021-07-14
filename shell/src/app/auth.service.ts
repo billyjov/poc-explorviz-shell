@@ -1,19 +1,26 @@
 import { Injectable } from '@angular/core';
-
 import { Router } from '@angular/router';
+
+import { Auth0Lock } from 'auth0-lock';
+import { Auth0Error, Auth0UserProfile } from 'auth0-js';
+import { BehaviorSubject, Subject } from 'rxjs';
+
 import { environment } from '../environments/environment';
 
-// import { JwtHelperService } from '@auth0/angular-jwt';
-import { Auth0Lock } from 'auth0-lock';
+export interface UserProfile {
+  name: string;
+  nickname: string;
+  picture: string;
+  sub: string;
+  updated_at: Date;
+}
 
-// import { } from '@auth0/auth0-angular';
-import { Auth0Error, Auth0UserProfile } from 'auth0-js';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  auth0Options = {
+  private auth0Options = {
     auth: {
       redirectUrl: environment.auth0.callbackUrl,
       audience: `https://${environment.auth0.domain}/api/v2/`,
@@ -32,14 +39,17 @@ export class AuthService {
       title: 'ExplorViz',
     },
   };
-  lock = new Auth0Lock(
+
+  private lock: Auth0LockStatic = new Auth0Lock(
     environment.auth0.clientId,
     environment.auth0.domain,
     this.auth0Options
   );
+
+  private currentUser$$: Subject<Auth0UserProfile> = new BehaviorSubject<Auth0UserProfile>({} as Auth0UserProfile);
+
   constructor(private router: Router) {
     this.lock.on('authenticated', async (authResult: any) => {
-      console.log('Nice, it worked!: ', authResult);
       await this.setUser(authResult.accessToken);
       // TODO: ask for access token
       sessionStorage.setItem('accessToken', authResult.accessToken);
@@ -50,8 +60,8 @@ export class AuthService {
       console.log('something went wrong', error);
     });
   }
-  login() {
-    // this.lock.show();
+
+  public login(): void {
     if (!document.getElementById('auth0-login-container')) {
       return;
     }
@@ -63,7 +73,8 @@ export class AuthService {
       //  this.router.transitionTo(config.auth0.routeAfterLogin);
     }
   }
-  logout() {
+
+  public logout(): void {
     // ...implement logout
     sessionStorage.removeItem('user');
     sessionStorage.removeItem('accessToken');
@@ -78,7 +89,7 @@ export class AuthService {
     }
   }
 
-  checkLogin() {
+  public checkLogin(): Promise<unknown> {
     // check to see if a user is authenticated, we'll get a token back
     return new Promise((resolve, reject) => {
       if (this.lock) {
@@ -115,7 +126,7 @@ export class AuthService {
     });
   }
 
-  setUser(token: string) {
+  public setUser(token: string): Promise<unknown> {
     // once we have a token, we are able to go get the users information
     return new Promise<Auth0UserProfile>((resolve, reject) => {
       if (this.lock) {
@@ -125,9 +136,10 @@ export class AuthService {
             if (_err) {
               reject(_err);
             } else {
+              console.log('hello from service')
               // this.debug('User set', profile);
               // this.set('user', profile);
-              // this.currentUser$.next(profile);
+              this.currentUser$$.next(profile);
               sessionStorage.setItem('user', JSON.stringify(profile));
               resolve(profile);
             }

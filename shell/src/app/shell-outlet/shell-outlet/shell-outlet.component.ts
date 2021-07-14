@@ -12,6 +12,8 @@ import { AuthService } from 'src/app/auth.service';
 })
 export class ShellOutletComponent implements OnInit {
   public isNavbarCollapsed = true;
+  public user = JSON.parse(sessionStorage.getItem('user') as any);
+
   constructor(private router: Router, private authService: AuthService) {}
 
   ngOnInit() {
