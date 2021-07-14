@@ -1,10 +1,10 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-// import { inject as service } from '@ember/service';
+import { inject as service } from '@ember/service';
 import { LandscapeToken } from 'landscape/services/landscape-token';
 import { action } from '@ember/object';
-// import AlertifyHandler from 'explorviz-frontend/utils/alertify-handler';
-// import Auth from 'explorviz-frontend/services/auth';
+import AlertifyHandler from 'landscape/utils/alertify-handler';
+import Auth from 'landscape/services/auth';
 
 interface Args {
   tokens: LandscapeToken[];
@@ -14,8 +14,13 @@ interface Args {
 }
 
 export default class TokenSelection extends Component<Args> {
-  // @service('auth')
-  // auth!: Auth;
+
+  // TODO: check auth service and auth.
+  @service('auth')
+  auth!: Auth;
+
+
+  user = JSON.parse(sessionStorage.getItem('user') as string);
 
   @tracked
   sortProperty: keyof LandscapeToken = 'value';
@@ -40,7 +45,6 @@ export default class TokenSelection extends Component<Args> {
   @action
   // eslint-disable-next-line class-methods-use-this
   onTokenCopied() {
-    console.log('Token copied to clipboard');
-    // AlertifyHandler.showAlertifySuccess('Token copied to clipboard');
+    AlertifyHandler.showAlertifySuccess('Token copied to clipboard');
   }
 }

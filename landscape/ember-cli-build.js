@@ -23,7 +23,7 @@ module.exports = function (defaults) {
     svgJar: {
       sourceDirs: [
         'public', // default SVGJar lookup directory
-        'node_modules/octicons/build/svg',
+        'node_modules/@primer/octicons/build/svg',
       ],
     },
     // auth0 globals config.
@@ -63,16 +63,8 @@ module.exports = function (defaults) {
   // please specify an object with the list of modules as keys
   // along with the exports of each module as its value.
 
-  // micro frontend single-spa module.
-  // app.import('node_modules/single-spa-ember/amd/single-spa-ember.js', {
-  //   using: [
-  //     {
-  //       transformation: 'amd',
-  //       as: 'single-spa-ember',
-  //     },
-  //   ],
-  // });
-  // app.import('node_modules/bootstrap/dist/js/bootstrap.min.js');
+  app.import('node_modules/bootstrap/dist/js/bootstrap.min.js');
+  app.import('node_modules/alertifyjs/build/css/alertify.min.css');
   app.import('node_modules/auth0-js/build/auth0.js');
 
   return app.toTree();

@@ -55,7 +55,7 @@ export default class Auth extends Service {
       },
     });
 
-    this.lock.on('authenticated', (authResult) => {
+    this.lock.on('authenticated', (authResult: any) => {
       this.router.transitionTo(config.auth0.routeAfterLogin).then(async () => {
         await this.setUser(authResult.accessToken);
         this.set('accessToken', authResult.accessToken);
@@ -122,7 +122,7 @@ export default class Auth extends Service {
     // check to see if a user is authenticated, we'll get a token back
     return new Promise((resolve, reject) => {
       if (this.lock) {
-        this.lock.checkSession({}, async (err, authResult) => {
+        this.lock.checkSession({}, async (err: any, authResult: any) => {
           // this.debug(authResult);
           if (err || authResult === undefined) {
             this.set('user', undefined);

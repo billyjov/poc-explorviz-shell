@@ -1,10 +1,10 @@
 import Component from '@glimmer/component';
 import { LandscapeToken } from 'landscape/services/landscape-token';
 import { action } from '@ember/object';
-// import { inject as service } from '@ember/service';
-// import AlertifyHandler from 'landscape/utils/alertify-handler';
+import { inject as service } from '@ember/service';
+import AlertifyHandler from 'landscape/utils/alertify-handler';
 import ENV from 'landscape/config/environment';
-// import Auth from 'landscape/services/auth';
+import Auth from 'landscape/services/auth';
 import { tracked } from '@glimmer/tracking';
 
 interface ShareLandscapeArgs {
@@ -15,8 +15,8 @@ interface ShareLandscapeArgs {
 const { userService } = ENV.backendAddresses;
 
 export default class ShareLandscape extends Component<ShareLandscapeArgs> {
-  // @service('auth')
-  // auth!: Auth;
+  @service('auth')
+  auth!: Auth;
 
   @tracked
   username: string = '';
@@ -31,9 +31,9 @@ export default class ShareLandscape extends Component<ShareLandscapeArgs> {
       );
       this.args.token.sharedUsersIds.addObject(this.username);
 
-      // AlertifyHandler.showAlertifySuccess(`Access of ${this.username} granted for token ${this.args.token.value}`);
+      AlertifyHandler.showAlertifySuccess(`Access of ${this.username} granted for token ${this.args.token.value}`);
     } catch (e) {
-      // AlertifyHandler.showAlertifySuccess(e.message);
+      AlertifyHandler.showAlertifySuccess(e.message);
     }
   }
 
@@ -42,9 +42,9 @@ export default class ShareLandscape extends Component<ShareLandscapeArgs> {
     try {
       await this.sendModifyAccess(this.args.token.value, userId, 'revoke');
       this.args.token.sharedUsersIds.removeObject(userId);
-      // AlertifyHandler.showAlertifySuccess(`Access of ${userId} revoked for token ${this.args.token.value}`);
+      AlertifyHandler.showAlertifySuccess(`Access of ${userId} revoked for token ${this.args.token.value}`);
     } catch (e) {
-      // AlertifyHandler.showAlertifySuccess(e.message);
+      AlertifyHandler.showAlertifySuccess(e.message);
     }
   }
 
@@ -53,9 +53,9 @@ export default class ShareLandscape extends Component<ShareLandscapeArgs> {
     try {
       await this.sendModifyAccess(this.args.token.value, userId, 'clone');
       this.args.reload();
-      // AlertifyHandler.showAlertifySuccess(`Cloned token ${this.args.token.value}`);
+      AlertifyHandler.showAlertifySuccess(`Cloned token ${this.args.token.value}`);
     } catch (e) {
-      // AlertifyHandler.showAlertifySuccess(e.message);
+      AlertifyHandler.showAlertifySuccess(e.message);
     }
   }
 

@@ -26,6 +26,7 @@
     "copy:bundles": "copyfiles -f dist/assets/landscapes.js dist/assets/landscapes.css ../shell/src/assets/landscapes"
   },
   "devDependencies": {
+    "@ember/jquery": "^2.0.0",
     "@ember/optional-features": "^2.0.0",
     "@ember/test-helpers": "^2.2.0",
     "@glimmer/component": "^1.0.3",
@@ -87,8 +88,9 @@
     "ember-qunit": "^5.1.2",
     "ember-resolver": "^8.0.2",
     "ember-source": "~3.25.1",
-    "ember-svg-jar": "^2.3.3",
+    "ember-svg-jar": "^2.2.3",
     "ember-template-lint": "^2.18.1",
+    "ember-truth-helpers": "^3.0.0",
     "ember-welcome-page": "^4.0.0",
     "eslint": "^7.20.0",
     "eslint-config-prettier": "^7.2.0",
@@ -111,9 +113,9 @@
     "edition": "octane"
   },
   "dependencies": {
-    "rxjs": "^7.2.0",
-    "single-spa": "^5.9.3",
-    "single-spa-css": "^1.1.2",
-    "single-spa-ember": "^0.2.0"
+    "@primer/octicons": "^14.2.2",
+    "alertifyjs": "^1.13.1",
+    "jquery": "^3.6.0",
+    "rxjs": "^7.2.0"
   }
 }

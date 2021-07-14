@@ -13,7 +13,6 @@ export default class App extends Application {
   // needed for custom elements.
   // TODO: use environment variables to deal with this.
   // autoboot = false;
-
 }
 
 loadInitializers(App, config.modulePrefix);
