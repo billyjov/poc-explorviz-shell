@@ -3,18 +3,9 @@ import { Router } from '@angular/router';
 
 import { Auth0Lock } from 'auth0-lock';
 import { Auth0Error, Auth0UserProfile } from 'auth0-js';
-import { BehaviorSubject, Subject } from 'rxjs';
 
-import { environment } from '../environments/environment';
-
-export interface UserProfile {
-  name: string;
-  nickname: string;
-  picture: string;
-  sub: string;
-  updated_at: Date;
-}
-
+import { environment } from '../../../environments/environment';
+import { SessionService } from '../session/session.service';
 
 @Injectable({
   providedIn: 'root',
@@ -46,9 +37,10 @@ export class AuthService {
     this.auth0Options
   );
 
-  private currentUser$$: Subject<Auth0UserProfile> = new BehaviorSubject<Auth0UserProfile>({} as Auth0UserProfile);
-
-  constructor(private router: Router) {
+  constructor(
+    private router: Router,
+    private sessionService: SessionService
+  ) {
     this.lock.on('authenticated', async (authResult: any) => {
       await this.setUser(authResult.accessToken);
       // TODO: ask for access token
@@ -70,7 +62,7 @@ export class AuthService {
       this.lock.show();
     } else {
       // no-auth
-      //  this.router.transitionTo(config.auth0.routeAfterLogin);
+      this.router.navigate([environment.auth0.routeAfterLogin]);
     }
   }
 
@@ -78,6 +70,7 @@ export class AuthService {
     // ...implement logout
     sessionStorage.removeItem('user');
     sessionStorage.removeItem('accessToken');
+    this.sessionService.logout();
     if (this.lock) {
       this.lock?.logout({
         clientID: environment.auth0.clientId,
@@ -93,18 +86,14 @@ export class AuthService {
     // check to see if a user is authenticated, we'll get a token back
     return new Promise((resolve, reject) => {
       if (this.lock) {
-        this.lock.checkSession({}, async (err, authResult) => {
-          // this.debug(authResult);
+        this.lock.checkSession({}, async (err, authResult: AuthResult | undefined) => {
           if (err || authResult === undefined) {
-            // this.set('user', undefined);
-            // this.set('accessToken', undefined);
-            // this.currentUser$.next(undefined);
             // TODO: check correct method
             sessionStorage.removeItem('user');
             sessionStorage.removeItem('accessToken');
+            this.sessionService.logout();
             reject(err);
           } else {
-            // this.set('accessToken', authResult.accessToken);
             // TODO: ask for current method
             sessionStorage.setItem('accessToken', authResult.accessToken);
             await this.setUser(authResult.accessToken);
@@ -113,9 +102,6 @@ export class AuthService {
         });
       } else {
         // no-auth
-        // this.currentUser$.next(config.auth0.profile);
-        // this.set('user', config.auth0.profile);
-        // this.set('accessToken', config.auth0.accessToken);
         sessionStorage.setItem(
           'user',
           JSON.stringify(environment.auth0.profile)
@@ -134,12 +120,10 @@ export class AuthService {
           token,
           (_err: Auth0Error, profile: Auth0UserProfile) => {
             if (_err) {
+              this.sessionService.update('', {} as Auth0UserProfile);
               reject(_err);
             } else {
-              console.log('hello from service')
-              // this.debug('User set', profile);
-              // this.set('user', profile);
-              this.currentUser$$.next(profile);
+              this.sessionService.update(token, profile);
               sessionStorage.setItem('user', JSON.stringify(profile));
               resolve(profile);
             }
@@ -147,10 +131,16 @@ export class AuthService {
         );
       } else {
         // no-auth
-        // this.set('user', environment.auth0.profile);
-        // this.currentUser$.next(environment.auth0.profile);
-        // resolve(environment.auth0.profile);
+        resolve(
+          environment.auth0.profile as
+            | Auth0UserProfile
+            | PromiseLike<Auth0UserProfile>
+        );
       }
     });
+  }
+
+  public get user(): Auth0UserProfile | null {
+    return this.sessionService.user;
   }
 }

@@ -11,40 +11,22 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup"
     [ngbCollapse]="isNavbarCollapsed">
-    <!-- <div class="navbar-nav mr-auto">
-      <a class="nav-item nav-link" [routerLink]="['/landscapes']"
-        routerLinkActive="active" (click)="navigateToRoute('/landscapes')">
-        Landscapes
-        <span class="sr-only">(current)</span>
-      </a>
-      <a class="nav-item nav-link" [routerLink]="['/list']"
-        routerLinkActive="active" (click)="navigateToRoute('/list')">
-        List
-      </a>
-      <a class="nav-item nav-link" [routerLink]="['/visualization']"
-        routerLinkActive="active">
-        visualization
-      </a>
-      <a class="nav-item nav-link disabled" href="#">
-        Disabled
-      </a>
-    </div> -->
     <div id="navbar-user-options" class="btn-group ml-auto">
       <div ngbDropdown placement="bottom-left">
         <a class="dropdown-toggle d-flex align-items-center" ngbDropdownToggle
           role="button">
-          <img [src]="user.picture" class="img-avatar">
+          <img [src]="user?.picture" class="img-avatar">
         </a>
         <div ngbDropdownMenu aria-labelledby="dropdownConfig"
           class="menu-dropdown-position">
           <div class="dropdown-header">
             <div>
               <strong class="truncate-text">
-                {{ user.nickname }}
+                {{ user?.nickname }}
               </strong>
             </div>
             <span class="truncate-text">
-              {{ user.sub }}
+              {{ user?.sub }}
             </span>
           </div>
           <hr class="c-divider">

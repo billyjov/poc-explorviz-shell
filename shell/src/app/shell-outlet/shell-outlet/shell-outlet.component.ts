@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 
 import { fromEvent } from 'rxjs';
 
-import { AuthService } from 'src/app/auth.service';
+import { AuthService } from 'src/app/core/auth/auth.service';
 
 @Component({
   selector: 'app-shell-outlet',
@@ -12,9 +12,12 @@ import { AuthService } from 'src/app/auth.service';
 })
 export class ShellOutletComponent implements OnInit {
   public isNavbarCollapsed = true;
-  public user = JSON.parse(sessionStorage.getItem('user') as any);
+  public user = this.authService.user;
 
-  constructor(private router: Router, private authService: AuthService) {}
+  constructor(
+    private router: Router,
+    private authService: AuthService
+  ) { }
 
   ngOnInit() {
     fromEvent(window, 'ember-app:landscapes').subscribe((event) => {
@@ -23,7 +26,7 @@ export class ShellOutletComponent implements OnInit {
     });
   }
 
-  logout() {
+  public logout(): void {
     this.authService.logout();
     this.router.navigateByUrl('login');
   }

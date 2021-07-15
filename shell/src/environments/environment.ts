@@ -10,9 +10,13 @@ export const environment = {
     logoUrl: '../assets/img/explorviz-logo.png',
     callbackUrl: 'http://localhost:4200/callback',
     logoutReturnUrl: 'http://localhost:4200/',
-    routeAfterLogin: '/list',
+    routeAfterLogin: '/landscapes',
     accessToken: '',
-    profile: {},
+    profile: {
+      name: 'John Doe',
+      nickname: 'Johnny',
+      sub: '9000',
+    },
   },
 };
 

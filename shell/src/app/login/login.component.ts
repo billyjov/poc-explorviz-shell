@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+
 import { environment } from 'src/environments/environment';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../core/auth/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -10,16 +11,16 @@ import { AuthService } from '../auth.service';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
      this.authService
        .checkLogin()
-       .then((res) => {
-         console.log('auth res works: ', res)
-         return this.router.navigateByUrl(environment.auth0.routeAfterLogin);
-       })
-       .catch(() => this.authService.login());
+       .then(() => this.router.navigate([environment.auth0.routeAfterLogin])
+       .catch(() => this.authService.login()))
   }
 
 }
