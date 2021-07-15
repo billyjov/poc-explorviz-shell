@@ -49,6 +49,10 @@ export class SessionService {
     return user;
   }
 
+  public hasTokenInStorage(): boolean {
+    return !!sessionStorage.getItem('accessToken');
+  }
+
   public hasValidToken(): boolean {
     return !!this.payload && this.payload.exp > Date.now() / 1000;
   }

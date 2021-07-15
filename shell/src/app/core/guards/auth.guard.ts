@@ -25,10 +25,14 @@ export class AuthGuard implements CanActivate {
     state: RouterStateSnapshot
   ): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
 
-    if (!this.sessionService.hasValidToken()) {
+    if (!this.sessionService.hasTokenInStorage() && !this.sessionService.hasValidToken()) {
       this.router.navigate(['login']);
       return false;
     }
+
+    const token = sessionStorage.getItem('accessToken') as string;
+    const user = JSON.parse(sessionStorage.getItem('user') as string);
+    this.sessionService.update(token, user);
     return true;
   }
 }

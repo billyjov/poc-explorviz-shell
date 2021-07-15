@@ -42,7 +42,13 @@ export default class Landscapes extends Controller {
   @action
   selectToken(token: LandscapeToken) {
     this.tokenService.setToken(token);
-    this.transitionToRoute('visualization');
+
+    // parent event for visualization transition
+    window.dispatchEvent(
+      new CustomEvent('landscapes:navigate-to-visualization', {
+        detail: { token },
+      })
+    );
   }
 
   @action

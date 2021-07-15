@@ -47,15 +47,17 @@ const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'landscapes'
+    redirectTo: 'landscapes',
   },
   {
     path: 'visualization',
     component: ShellOutletComponent,
+    canActivate: [AuthGuard],
     children: [
       {
         path: '',
         component: VisualizationComponent,
+        canActivate: [AuthGuard],
       },
     ],
   },
