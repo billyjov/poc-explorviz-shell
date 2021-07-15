@@ -19,6 +19,7 @@ module.exports = function (defaults) {
     },
     fingerprint: {
       customHash: null,
+      enabled: false,
     },
     svgJar: {
       sourceDirs: [

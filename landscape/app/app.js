@@ -8,11 +8,7 @@ export default class App extends Application {
   modulePrefix = config.modulePrefix;
   podModulePrefix = config.podModulePrefix;
   Resolver = Resolver;
-  // for consummation inside parent app
-  // rootElement = '#landscapeApp';
-  // needed for custom elements.
-  // TODO: use environment variables to deal with this.
-  // autoboot = false;
+  autoboot = false;
 }
 
 loadInitializers(App, config.modulePrefix);

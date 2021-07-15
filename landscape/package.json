@@ -22,6 +22,7 @@
     "test": "npm-run-all lint test:*",
     "test:ember": "ember test",
     "build": "ember build",
+    "build:all:prod": "npm run build:prod && npm run copy:bundles",
     "build:all": "npm run build && npm run copy:bundles",
     "copy:bundles": "copyfiles -f dist/assets/landscapes.js dist/assets/landscapes.css ../shell/src/assets/landscapes"
   },
