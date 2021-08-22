@@ -37,10 +37,7 @@ export class AuthService {
     this.auth0Options
   );
 
-  constructor(
-    private router: Router,
-    private sessionService: SessionService
-  ) {
+  constructor(private router: Router, private sessionService: SessionService) {
     this.lock.on('authenticated', async (authResult: any) => {
       await this.setUser(authResult.accessToken);
       // TODO: ask for access token
@@ -86,20 +83,26 @@ export class AuthService {
     // check to see if a user is authenticated, we'll get a token back
     return new Promise((resolve, reject) => {
       if (this.lock) {
-        this.lock.checkSession({}, async (err, authResult: AuthResult | undefined) => {
-          if (err || authResult === undefined) {
-            // TODO: check correct method
-            sessionStorage.removeItem('user');
-            sessionStorage.removeItem('accessToken');
-            this.sessionService.logout();
-            reject(err);
-          } else {
-            // TODO: ask for current method
-            sessionStorage.setItem('accessToken', authResult.accessToken);
-            await this.setUser(authResult.accessToken);
-            resolve(authResult);
+        this.lock.checkSession(
+          {},
+          async (err, authResult: AuthResult | undefined) => {
+            if (err || authResult === undefined) {
+              // TODO: check correct method
+              console.log('hello here ');
+
+              sessionStorage.removeItem('user');
+              sessionStorage.removeItem('accessToken');
+              this.sessionService.logout();
+              this.lock.show();
+              reject(err);
+            } else {
+              // TODO: ask for current method
+              sessionStorage.setItem('accessToken', authResult.accessToken);
+              await this.setUser(authResult.accessToken);
+              resolve(authResult);
+            }
           }
-        });
+        );
       } else {
         // no-auth
         sessionStorage.setItem(

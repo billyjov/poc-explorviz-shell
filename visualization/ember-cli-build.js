@@ -35,7 +35,7 @@ module.exports = function (defaults) {
     emberCliConcat: {
       enabled: true,
       outputDir: 'assets',
-      outputFileName: 'visualization',
+      outputFileName: 'visualizations',
       js: {
         concat: true,
         contentFor: 'concat-js',

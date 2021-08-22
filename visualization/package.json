@@ -11,7 +11,7 @@
     "test": "tests"
   },
   "scripts": {
-    "build": "ember build --environment=production",
+    "build:prod": "ember build --environment=production",
     "lint": "npm-run-all --aggregate-output --continue-on-error --parallel 'lint:!(fix)'",
     "lint:fix": "npm-run-all --aggregate-output --continue-on-error --parallel lint:*:fix",
     "lint:hbs": "ember-template-lint .",
@@ -20,7 +20,11 @@
     "lint:js:fix": "eslint . --fix",
     "start": "ember serve",
     "test": "npm-run-all lint test:*",
-    "test:ember": "ember test"
+    "test:ember": "ember test",
+    "build": "ember build",
+    "build:all:prod": "npm run build:prod && npm run copy:bundles",
+    "build:all": "npm run build && npm run copy:bundles",
+    "copy:bundles": "copyfiles -f dist/assets/visualizations.js dist/assets/visualizations.css ../shell/src/assets/visualization"
   },
   "devDependencies": {
     "@ember/optional-features": "^2.0.0",
@@ -57,6 +61,7 @@
     "babel-eslint": "^10.1.0",
     "bootstrap": "^4.6.0",
     "broccoli-asset-rev": "^3.0.0",
+    "copyfiles": "^2.4.1",
     "ember-auto-import": "^1.10.1",
     "ember-bootstrap": "^4.9.0",
     "ember-cli": "~3.25.3",
@@ -71,6 +76,7 @@
     "ember-cli-terser": "^4.0.1",
     "ember-cli-typescript": "^4.2.1",
     "ember-cli-typescript-blueprints": "^3.0.0",
+    "ember-custom-elements": "^2.1.0-1",
     "ember-data": "~3.25.0",
     "ember-export-application-global": "^2.0.1",
     "ember-fetch": "^8.0.4",
