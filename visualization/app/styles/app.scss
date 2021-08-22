@@ -1,2 +1,39 @@
+@import "main";
+@import "timeline";
+@import "alertify";
+@import 'right_click_menu';
 
 @import "ember-bootstrap/bootstrap";
+// @import 'ember-right-click-menu';
+
+.disable-select {
+  user-select: none;
+  /* supported by Chrome and Opera */
+  -webkit-user-select: none;
+  /* Safari */
+  -khtml-user-select: none;
+  /* Konqueror HTML */
+  -moz-user-select: none;
+  /* Firefox */
+  -ms-user-select: none;
+  /* Internet Explorer/Edge */
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+  font-weight: 400;
+}
+
+#ember-right-click-menu-wormhole>ul {
+  z-index: 100000;
+}
