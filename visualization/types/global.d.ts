@@ -4,3 +4,5 @@ declare module 'visualization/templates/*' {
   const tmpl: TemplateFactory;
   export default tmpl;
 }
+
+declare module 'plotly.js-dist';

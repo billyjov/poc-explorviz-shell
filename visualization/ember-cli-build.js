@@ -32,6 +32,13 @@ module.exports = function (defaults) {
         },
       },
     },
+    // babel: {
+    //   sourceMaps: 'inline',
+    // },
+    // 'ember-cli-babel': {
+    //   includePolyfill: true,
+    //   sourceMaps: 'inline',
+    // },
     emberCliConcat: {
       enabled: true,
       outputDir: 'assets',

@@ -1,4 +1,6 @@
 'use strict';
+const BACKEND_CONFIG = require('./backend-addresses');
+const AUTH_CONFIG = require('./auth0-variables');
 
 module.exports = function (environment) {
   let ENV = {
@@ -16,7 +18,22 @@ module.exports = function (environment) {
         Date: false,
       },
     },
-
+    backendAddresses: {
+      landscapeService: BACKEND_CONFIG.landscapeService,
+      traceService: BACKEND_CONFIG.traceService,
+      userService: BACKEND_CONFIG.userService,
+      collaborativeService: BACKEND_CONFIG.collaborativeService,
+    },
+    auth0: {
+      clientId: AUTH_CONFIG.clientId,
+      domain: AUTH_CONFIG.domain,
+      logoUrl: AUTH_CONFIG.logoUrl,
+      callbackUrl: AUTH_CONFIG.callbackUrl,
+      logoutReturnUrl: AUTH_CONFIG.logoutReturnUrl,
+      routeAfterLogin: AUTH_CONFIG.routeAfterLogin,
+      accessToken: AUTH_CONFIG.accessToken,
+      profile: AUTH_CONFIG.profile,
+    },
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
