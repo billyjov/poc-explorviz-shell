@@ -69,16 +69,16 @@ export default class VisualizationRoute extends Route {
   }
 
   // @Override
-  // setupController(
-  //   controller: VisualizationController,
-  //   model: any,
-  //   transition: any
-  // ) {
-  //   // Call _super for default behavior
-  //   // super.setupController(controller, model, transition);
+  setupController(
+    controller: VisualizationController,
+    model: any,
+    transition: any
+  ) {
+    // Call _super for default behavior
+    super.setupController(controller, model, transition);
 
-  //   controller.initRendering();
-  // }
+    controller.initRendering();
+  }
 
   // @Override Ember-Hook
   /* eslint-disable-next-line class-methods-use-this */

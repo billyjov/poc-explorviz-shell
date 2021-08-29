@@ -12,6 +12,7 @@ export type LandscapeToken = {
 
 export default class LandscapeTokenService extends Service {
   token: LandscapeToken | null = null;
+  tmpToken: LandscapeToken | null = null;
 
   constructor() {
     super(...arguments);

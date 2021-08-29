@@ -123,6 +123,7 @@
     "ember-concurrency-decorators": "^2.0.1",
     "ember-concurrency-ts": "^0.2.2",
     "plotly.js-dist": "^1.58.5",
+    "rxjs": "^7.3.0",
     "three": "^0.119.1",
     "threejs-meshline": "^2.0.12",
     "webxr-polyfill": "^2.0.3"
