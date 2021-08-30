@@ -88,6 +88,8 @@ export default class LandscapeListener extends Service.extend(Evented) {
         reject(new Error('No landscape token selected'));
         return;
       }
+
+      console.log('request structured data')
       fetch(
         `${landscapeService}/v2/landscapes/${this.tokenService.token.value}/structure`,
         {

@@ -1,4 +1,4 @@
-{{!-- {{add-listener
+{{add-listener
 this.landscapeListener
 "newLandscapeData"
 this.receiveNewLandscapeData
@@ -13,7 +13,9 @@ this.receiveOpenLandscapeView
 this.timestampRepo
 "updated"
 this.updateTimestampList
-}} --}}
+}}
+
+<div id="ember-right-click-menu-wormhole"></div>
 
 <div id="vizspace">
   {{#if this.showVR}}
@@ -36,6 +38,7 @@ this.updateTimestampList
     <div class="spinner-center-3" role="status"></div>
   </div>
   {{else if this.allLandscapeDataExistsAndNotEmpty}}
+  <h1>Hi data are available</h1>
   <Visualization::Rendering::LandscapeRendering
     @landscapeData={{this.landscapeData}} @font={{this.font}}
     @components={{this.components}} @removeComponent={{this.removeComponent}}
@@ -57,6 +60,7 @@ this.updateTimestampList
   </div>
   {{/if}}
   {{else if this.showApplicationView}}
+  <h2> Show app view</h2>
   <Visualization::Rendering::ApplicationRendering
     @landscapeData={{this.landscapeData}} @addComponent={{this.addComponent}}
     @font={{this.font}} @components={{this.components}}

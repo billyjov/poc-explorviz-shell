@@ -319,10 +319,10 @@ export default class VisualizationController extends Controller {
   }
 
   initRendering() {
-    // this.landscapeData = null;
-    // this.selectedTimestampRecords = [];
-    // this.visualizationPaused = false;
-    // this.closeDataSelection();
+    this.landscapeData = null;
+    this.selectedTimestampRecords = [];
+    this.visualizationPaused = false;
+    this.closeDataSelection();
     this.landscapeListener.initLandscapePolling();
     this.updateTimestampList();
   }
