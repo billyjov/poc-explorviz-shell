@@ -235,6 +235,9 @@ export default class LandscapeRendering extends GlimmerComponent<Args> {
    */
   initRenderer() {
     const { width, height } = this.canvas;
+
+    console.log('height: ', width);
+    console.log('width: ', height);
     this.webglrenderer = new THREE.WebGLRenderer({
       antialias: true,
       canvas: this.canvas,
@@ -321,6 +324,7 @@ export default class LandscapeRendering extends GlimmerComponent<Args> {
       this.scene.add(sphere);
       spheres.push(sphere);
     }
+    console.log('spheres: ', )
     return spheres;
   }
 
@@ -422,7 +426,7 @@ export default class LandscapeRendering extends GlimmerComponent<Args> {
  * @method populateScene
  */
   @restartableTask*
-  populateScene() {
+    populateScene() {
     this.debug('populate landscape-rendering');
 
     const { structureLandscapeData, dynamicLandscapeData } = this.args.landscapeData;
@@ -501,7 +505,7 @@ export default class LandscapeRendering extends GlimmerComponent<Args> {
 
       this.debug('Landscape loaded');
     } catch (e) {
-      // console.log(e);
+      console.error('RENDERING EXEPTION: ', e);
     }
   }
 

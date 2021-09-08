@@ -30,6 +30,7 @@ export default class THREEPerformance {
 
     this.threexStats.domElement.style.position = 'absolute';
     this.threexStats.domElement.style.bottom = '200px';
+    console.log('inside dom element')
     $('#rendering').append(this.threexStats.domElement);
   }
 

@@ -67,6 +67,19 @@ module.exports = function (defaults) {
   // modules that you would like to import into your application
   // please specify an object with the list of modules as keys
   // along with the exports of each module as its value.
+  app.import('node_modules/three/build/three.min.js', {
+    prepend: true,
+  });
+
+  app.import('vendor/threex/threex.rendererstats.min.js');
+  app.import('vendor/threex/threex.dynamictexture.min.js');
+  app.import('node_modules/alertifyjs/build/css/alertify.min.css');
+  app.import('node_modules/alertifyjs/build/css/themes/default.min.css');
+  app.import('vendor/cytoscape/cytoscape.min.js');
+  app.import('node_modules/bootstrap/dist/js/bootstrap.min.js');
+  app.import('vendor/eventsource-polyfill/eventsource.min.js');
+  app.import('node_modules/webxr-polyfill/build/webxr-polyfill.min.js');
+  app.import('node_modules/elkjs/lib/elk-api.js');
 
   return app.toTree();
 };

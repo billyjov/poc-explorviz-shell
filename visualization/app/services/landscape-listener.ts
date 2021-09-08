@@ -70,7 +70,6 @@ export default class LandscapeListener extends Service.extend(Evented) {
   async requestData(endTime: number, intervalInSeconds: number) {
     const startTime = endTime - intervalInSeconds * 1000;
 
-    console.log('hello i need new request: ');
     const structureDataPromise =
       this.requestStructureData(/* startTime, endTime */);
     const dynamicDataPromise = this.requestDynamicData(startTime, endTime);
@@ -114,7 +113,6 @@ export default class LandscapeListener extends Service.extend(Evented) {
   requestDynamicData(fromTimestamp: number, toTimestamp: number) {
     return new Promise<DynamicLandscapeData>((resolve, reject) => {
       if (this.tokenService.token === null) {
-        console.log('hello i tried a request but token was null')
         reject(new Error('No landscape token selected'));
         return;
       }

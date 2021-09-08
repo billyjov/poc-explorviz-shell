@@ -4,7 +4,8 @@
 >
 </div>
 
-<div class="row" style="height:100%">
+Hello from app rendering.
+<div class="row" >
   <div
     class="d-flex {{if @showDataSelection "col-8" "col-12"}}"
     style="flex-direction: column; height: 100%"
@@ -48,6 +49,7 @@
           />
         {{/if}}
       </canvas>
+
       {{#if this.loadNewApplication.isRunning}}
         <div
           class="position-absolute mt-6 pt-5 ml-3 pointer-events-none"
