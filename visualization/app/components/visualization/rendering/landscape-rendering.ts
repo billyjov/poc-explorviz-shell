@@ -236,8 +236,6 @@ export default class LandscapeRendering extends GlimmerComponent<Args> {
   initRenderer() {
     const { width, height } = this.canvas;
 
-    console.log('height: ', width);
-    console.log('width: ', height);
     this.webglrenderer = new THREE.WebGLRenderer({
       antialias: true,
       canvas: this.canvas,

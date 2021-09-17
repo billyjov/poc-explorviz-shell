@@ -465,7 +465,7 @@ export default class ApplicationRendering extends GlimmerComponent<Args> {
 
       this.scene.add(this.applicationObject3D);
     } catch (e) {
-      // console.log(e);
+      console.log(e);
     }
   }
 
