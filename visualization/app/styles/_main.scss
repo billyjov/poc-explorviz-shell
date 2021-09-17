@@ -19,7 +19,7 @@ body {
 #rendering {
   @extend .d-flex;
   @extend .flex-grow-1;
-  max-height: 100%;
+  height: 100vh;
   position: relative;
 }
 
