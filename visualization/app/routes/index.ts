@@ -11,7 +11,7 @@ export default class IndexRoute extends Route {
     super.beforeModel(transition);
 
     if (!sessionStorage.getItem('accessToken')) {
-      this.transitionTo('visualization-login');
+      this.transitionTo('login');
     } else {
       this.transitionTo('visualization');
     }
