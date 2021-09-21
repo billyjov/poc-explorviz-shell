@@ -48,3 +48,5 @@ Thumbs.db
 # Micro apps
 src/assets/**/*.js
 src/assets/**/*.css
+
+src/assets/img/logos/*.png

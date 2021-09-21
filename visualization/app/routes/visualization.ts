@@ -42,7 +42,7 @@ export default class VisualizationRoute extends Route {
     return new Promise((resolve, reject) => {
       new THREE.FontLoader().load(
         // resource URL
-        '/three.js/fonts/roboto_mono_bold_typeface.json',
+        '/assets/three.js/fonts/roboto_mono_bold_typeface.json',
 
         // onLoad callback
         (font) => {
