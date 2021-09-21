@@ -4,7 +4,7 @@ module.exports = {
   logoUrl: 'http://localhost:4200/assets/img/explorviz-logo.png',
   callbackUrl: 'http://localhost:4200/callback',
   logoutReturnUrl: 'http://localhost:4200/',
-  routeAfterLogin: '/landscapes',
+  routeAfterLogin: 'landscapes',
 
   // iff started with environment "noauth", this token and profile will be applied
   accessToken: 'SPECIAL_TOKEN',
