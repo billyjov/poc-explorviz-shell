@@ -19,15 +19,18 @@ export default class LoginRoute extends Route {
   afterModel() {
     this.auth
       .checkLogin()
-      .then((val) => {
-        console.log('value from login: ', val)
+      .then(() => {
         this.getRandomLandscapeToken();
-        console.log('here to navigate after login')
         return this.transitionTo(config.auth0.routeAfterLogin);
       })
       .catch(() => this.auth.login());
   }
 
+  /**
+   * Get list of tokens and save random token for standalone mode in
+   * localStorage
+   * @returns Promise
+   */
   private getRandomLandscapeToken(): Promise<any> {
     let uId = JSON.parse(sessionStorage.getItem('user') as string)?.sub;
 
@@ -59,7 +62,6 @@ export default class LoginRoute extends Route {
   }
 
   private setToken(token: unknown): void {
-    console.log('token to set: ', token);
     localStorage.setItem('currentLandscapeToken', JSON.stringify(token));
   }
 }

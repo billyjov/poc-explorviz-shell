@@ -5,6 +5,7 @@ import { inject as service } from '@ember/service';
 import THREE from 'three';
 import debugLogger from 'ember-debug-logger';
 
+import Auth from 'visualization/services/auth';
 import LandscapeTokenService from 'visualization/services/landscape-token';
 import VisualizationController from 'visualization/controllers/visualization';
 import AlertifyHandler from 'visualization/utils/alertify-handler';
@@ -19,13 +20,21 @@ export default class VisualizationRoute extends Route {
   @service('landscape-token')
   landscapeToken!: LandscapeTokenService;
 
+  @service
+  auth!: Auth;
+
   debug = debugLogger();
 
   async beforeModel() {
-    // if (this.landscapeToken.token === null) {
-    //   this.transitionTo('landscapes');
-    //   return Promise.resolve();
-    // }
+    if (
+      sessionStorage.getItem('accessToken') &&
+      this.landscapeToken.token === null
+    ) {
+      // TODO. deal with this.
+      // this.transitionTo('landscapes');
+
+      return Promise.resolve();
+    }
     // load font for labels
     const controller = this.controllerFor(
       'visualization'
@@ -34,8 +43,9 @@ export default class VisualizationRoute extends Route {
       const font = await this.loadFont();
       controller.set('font', font);
     }
+    // TODO: handle standalone mode
     // handle auth0 authorization
-    // return super.beforeModel();
+    return this.auth.checkLogin();
   }
 
   private async loadFont(): Promise<THREE.Font> {
@@ -64,8 +74,17 @@ export default class VisualizationRoute extends Route {
       AlertifyHandler.showAlertifyError('Failed to load font for labels.');
       return true;
     }
-    // return super.error(error);
-    return null;
+
+    // From old base route
+    if (error?.description) {
+      AlertifyHandler.showAlertifyWarning(error.description);
+    }
+    if (error.statusCode !== 429) {
+      console.log('should log out from visualization');
+      // TODO: event for logout & handle standalone mode
+      this.auth.logout();
+    }
+    return true;
   }
 
   // @Override

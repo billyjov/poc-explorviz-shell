@@ -3,7 +3,6 @@ import Service, { inject as service } from '@ember/service';
 import { Auth0Error, Auth0UserProfile } from 'auth0-js';
 import Auth0Lock from 'auth0-lock';
 import debugLogger from 'ember-debug-logger';
-import { BehaviorSubject } from 'rxjs';
 
 import config from 'visualization/config/environment';
 
@@ -20,15 +19,8 @@ export default class Auth extends Service {
 
   accessToken: string | undefined = undefined;
 
-  currentRouteLocation$: BehaviorSubject<string> = new BehaviorSubject<string>(
-    location.pathname
-  );
-  currentUser$: BehaviorSubject<Auth0UserProfile | undefined> =
-    new BehaviorSubject<Auth0UserProfile | undefined>(undefined);
-
   init() {
     super.init();
-    this.currentRouteLocation$.next(location.pathname);
     if (config.environment === 'noauth') {
       // no-auth
       this.set('user', config.auth0.profile);
@@ -60,7 +52,6 @@ export default class Auth extends Service {
       this.router.transitionTo(config.auth0.routeAfterLogin).then(async () => {
         await this.setUser(authResult.accessToken);
         this.set('accessToken', authResult.accessToken);
-        // TODO: ask for access token
         sessionStorage.setItem('accessToken', authResult.accessToken);
       });
     });
@@ -70,8 +61,6 @@ export default class Auth extends Service {
    * Send a user over to the hosted auth0 login page
    */
   login() {
-    this.currentRouteLocation$.next(location.pathname);
-
     // Since testem seems to enter routes but not render their templates,
     // the login container does not necessarily exist, which results in an error
     if (!document.getElementById('auth0-login-container')) {
@@ -101,7 +90,6 @@ export default class Auth extends Service {
             } else {
               this.debug('User set', profile);
               this.set('user', profile);
-              this.currentUser$.next(profile);
               sessionStorage.setItem('user', JSON.stringify(profile));
               resolve(profile);
             }
@@ -110,7 +98,6 @@ export default class Auth extends Service {
       } else {
         // no-auth
         this.set('user', config.auth0.profile);
-        this.currentUser$.next(config.auth0.profile);
         resolve(config.auth0.profile);
       }
     });
@@ -126,24 +113,22 @@ export default class Auth extends Service {
         this.lock.checkSession({}, async (err: any, authResult: any) => {
           this.debug(authResult);
           if (err || authResult === undefined) {
-            this.set('user', undefined);
-            this.set('accessToken', undefined);
-            this.currentUser$.next(undefined);
-            // TODO: check correct method
             sessionStorage.removeItem('user');
             sessionStorage.removeItem('accessToken');
             reject(err);
           } else {
-            this.set('accessToken', authResult.accessToken);
-            // TODO: ask for current method
-            sessionStorage.setItem('accessToken', authResult.accessToken);
-            await this.setUser(authResult.accessToken);
-            resolve(authResult);
+            try {
+              await this.setUser(authResult.accessToken);
+              this.set('accessToken', authResult.accessToken);
+              sessionStorage.setItem('accessToken', authResult.accessToken);
+              resolve(authResult);
+            } catch (e) {
+              reject(e);
+            }
           }
         });
       } else {
         // no-auth
-        this.currentUser$.next(config.auth0.profile);
         this.set('user', config.auth0.profile);
         this.set('accessToken', config.auth0.accessToken);
         sessionStorage.setItem('user', JSON.stringify(config.auth0.profile));
@@ -157,7 +142,6 @@ export default class Auth extends Service {
    * Get rid of everything in sessionStorage that identifies this user
    */
   logout() {
-    this.currentUser$.next(undefined);
     this.set('user', undefined);
     this.set('accessToken', undefined);
     // TODO: check correct method
