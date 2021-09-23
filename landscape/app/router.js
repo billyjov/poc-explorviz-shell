@@ -9,5 +9,5 @@ export default class Router extends EmberRouter {
 Router.map(function () {
   this.route('landscapes');
   this.route('callback');
-  this.route('landscapes-login');
+  this.route('login');
 });

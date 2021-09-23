@@ -17,23 +17,18 @@ export default class Landscapes extends Route {
     return this.refresh();
   }
 
-  beforeModel() {
-    console.log('======== INIT LANDSCAPE ROUTE INSIDE APP =======');
-  }
   async model() {
-    // let uId = this.auth.user?.sub;
     let uId = JSON.parse(sessionStorage.getItem('user') as string)?.sub;
 
-    // if (!uId) {
-    //   return Promise.reject(new Error('User profile not set'));
-    // }
+    if (!uId) {
+      return Promise.reject(new Error('User profile not set'));
+    }
 
     uId = encodeURI(uId);
 
     return new Promise<any>((resolve, reject) => {
       fetch(`${userService}/user/${uId}/token`, {
         headers: {
-          // Authorization: `Bearer ${this.auth.accessToken}`,
           Authorization: `Bearer ${sessionStorage.getItem('accessToken')}`,
         },
       })

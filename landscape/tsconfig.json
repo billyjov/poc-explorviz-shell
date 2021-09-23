@@ -13,7 +13,7 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
-    "noEmitOnError": false,
+    "noEmitOnError": true,
     "noEmit": true,
     "inlineSourceMap": true,
     "inlineSources": true,
@@ -35,6 +35,14 @@
   "include": [
     "app/**/*",
     "tests/**/*",
-    "types/**/*"
+    "types/**/*",
+    ".eslintrc.js",
+    "**/.eslintrc.js",
+    ".template-lintrc.js",
+    "ember-cli-build.js",
+    "app",
+    "config",
+    "tests",
+    "types",
   ]
 }

@@ -8,7 +8,7 @@ export default class App extends Application {
   modulePrefix = config.modulePrefix;
   podModulePrefix = config.podModulePrefix;
   Resolver = Resolver;
-  autoboot = false;
+  // autoboot = false;
 }
 
 loadInitializers(App, config.modulePrefix);

@@ -9,7 +9,7 @@ import config from 'landscape/config/environment';
  * @class Login-Route
  * @extends Ember.Route
  */
-export default class LandscapesLoginRoute extends Route {
+export default class LoginRoute extends Route {
   @service
   auth!: Auth;
 
