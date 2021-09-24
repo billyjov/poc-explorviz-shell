@@ -22,7 +22,7 @@
     "test": "npm-run-all lint test:*",
     "test:ember": "ember test",
     "build": "ember build",
-    "build:all:prod": "npm run build:prod && npm run copy:bundles & npm run copy:fonts",
+    "build:all:prod": "npm run build:prod && npm run copy:bundles & npm run copy:fonts && npm run copy:3rdPartyLibs && npm run copy:img",
     "build:all": "npm run build && npm run copy:bundles && npm run copy:fonts && npm run copy:3rdPartyLibs && npm run copy:img",
     "copy:bundles": "copyfiles -f dist/assets/visualizations.js dist/assets/visualizations.css ../shell/src/assets/visualization",
     "copy:fonts": "copyfiles public/assets/three.js/fonts/* ../shell/src/assets/three.js/fonts/ -u -f",
