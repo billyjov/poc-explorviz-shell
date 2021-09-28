@@ -1,0 +1,65 @@
+<div class="pr-3 pl-3 pb-3">
+
+  <div class="explorviz-visualization-navbar">
+    <ul class="nav justify-content-center">
+      <li class="nav-item" (click)="showColorPicker = true">
+        <div class="nav-link-with-cursor" title="Configure Colors">
+          Color Picker
+        </div>
+      </li>
+      <li class="nav-item" (click)="showTraceOverview = true">
+        <div class="nav-link-with-cursor" title="Show Traces">
+          Trace Overview
+        </div>
+      </li>
+      <li class="nav-item" (click)="showCollaborativeMode = true">
+        <div class="nav-link-with-cursor" title="Collaborative Settings">
+          Collaborative Mode
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <ng-container *ngIf="showColorPicker">
+    <div class="c-color-picker">
+      <div class="card mt-3 border-radius-0">
+        <div class="card-body d-flex flex-column">
+          <h5 class="text-center">Color Picker</h5>
+
+          <button class="btn btn-outline-info"
+            (click)="showColorPicker = false">
+            Close color picker
+          </button>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="showTraceOverview">
+    <div class="c-trace-overview">
+      <div class="card mt-3 border-radius-0">
+        <div class="card-body d-flex flex-column">
+          <h5 class="text-center">Trace Overview</h5>
+          <button class="btn btn-outline-info"
+            (click)="showTraceOverview = false">
+            Close trace overview
+          </button>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="showCollaborativeMode">
+    <div class="c-collaborative-mode">
+      <div class="card mt-3 border-radius-0">
+        <div class="card-body d-flex flex-column">
+          <h5 class="text-center">Collaborative Mode</h5>
+          <button class="btn btn-outline-info"
+            (click)="showCollaborativeMode = false">
+            Close Collaborative mode
+          </button>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>

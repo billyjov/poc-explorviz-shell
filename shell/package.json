@@ -28,6 +28,7 @@
     "bootstrap": "^4.5.0",
     "date-fns": "^2.22.1",
     "js-base64": "^3.6.1",
+    "material-icons": "^1.5.1",
     "octicons": "^8.5.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",

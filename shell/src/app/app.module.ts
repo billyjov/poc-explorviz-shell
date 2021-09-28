@@ -17,7 +17,7 @@ import { ShellOutletModule } from './shell-outlet/shell-outlet.module';
     AppComponent,
     LoginComponent,
     CallbackComponent,
-    VisualizationComponent
+    VisualizationComponent,
   ],
   imports: [
     BrowserModule,

@@ -42,4 +42,18 @@
   </div>
 </nav>
 
+<div class="sidebar-slider" [class.sidebar-slide-in]="isSidebarOpen">
+  <div class="sidebar-close" (click)="closeSidebar()">
+    <button class="btn btn-outline-secondary btn-close">
+      <span class="material-icons">
+        expand_less
+      </span>
+    </button>
+  </div>
+  <div class="sidebar-content">
+    <app-sidebar></app-sidebar>
+  </div>
+</div>
+
+
 <router-outlet></router-outlet>

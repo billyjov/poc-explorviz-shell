@@ -16,3 +16,66 @@
 .c-logo {
   height: 30px;
 }
+
+
+/* Sidebar  */
+
+.sidebar-opener {
+  cursor: pointer;
+}
+
+.sidebar-slider {
+  position: fixed;
+  top: 50px;
+  right: 0;
+  bottom: 160px;
+  z-index: 1;
+  background-color: white;
+  transform: translateX(100%);
+  transition: ease-in-out 300ms transform;
+  width: auto;
+  max-width: 500px;
+}
+
+.sidebar-slider.sidebar-slide-in {
+  transform: translateX(0%);
+  transition: ease-in-out 600ms transform;
+}
+
+.sidebar-close {
+  position: absolute;
+  top: 23px;
+  left: 20px;
+  cursor: pointer;
+  transform: rotate(-90deg);
+  padding: 0;
+}
+
+.sidebar-content {
+  font-size: 16px;
+  height: 100%;
+}
+
+
+.btn-close {
+  border-bottom: none !important;
+  border-color: darkgray;
+  border-bottom-right-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+  background-color: white !important;
+  left: 50%;
+  transform: translate(-50%, -26px);
+  z-index: 490;
+  height: 27px;
+  position: absolute;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.btn-close:focus {
+  box-shadow: none !important;
+}
+
+.btn-close:hover {
+  background-color: #6c757d !important;
+}

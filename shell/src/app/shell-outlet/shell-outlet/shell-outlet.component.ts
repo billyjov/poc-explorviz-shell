@@ -13,6 +13,7 @@ import { AuthService } from 'src/app/core/auth/auth.service';
 export class ShellOutletComponent implements OnInit, OnDestroy {
   public isNavbarCollapsed = true;
   public user = this.authService.user;
+  public isSidebarOpen = false;
 
   private subscriptions: Subscription = new Subscription();
 
@@ -29,6 +30,10 @@ export class ShellOutletComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscriptions.unsubscribe();
+  }
+
+  public closeSidebar(): void {
+    this.isSidebarOpen = !this.isSidebarOpen;
   }
 
   public logout(): void {
@@ -64,9 +69,9 @@ export class ShellOutletComponent implements OnInit, OnDestroy {
 
   private openVisualizationSidebar(): void {
     this.subscriptions.add(
-      fromEvent(window, 'visualization:open-sidebar').subscribe(() =>
-        console.log('open sidebar')
-      )
+      fromEvent(window, 'visualization:open-sidebar').subscribe(() => {
+        this.isSidebarOpen = true;
+      })
     );
   }
 }

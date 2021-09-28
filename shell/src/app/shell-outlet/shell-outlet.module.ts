@@ -4,9 +4,10 @@ import { RouterModule } from '@angular/router';
 
 import { ShellOutletComponent } from './shell-outlet/shell-outlet.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { SidebarComponent } from '../sidebar/sidebar.component';
 
 @NgModule({
-  declarations: [ShellOutletComponent],
+  declarations: [ShellOutletComponent, SidebarComponent],
   imports: [CommonModule, RouterModule, NgbModule],
 })
 export class ShellOutletModule {}
