@@ -227,7 +227,8 @@ export default class VisualizationController extends Controller {
 
   @action
   openDataSelection() {
-    this.showDataSelection = true;
+    // this.showDataSelection = true;
+    window.dispatchEvent(new CustomEvent('visualization:open-sidebar'));
   }
 
   @action

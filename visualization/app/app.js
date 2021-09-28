@@ -5,7 +5,10 @@ import { customElement } from 'ember-custom-elements';
 
 import config from 'visualization/config/environment';
 
-@customElement('ember-visualizations-app', { useShadowRoot: true })
+/**
+ *  Explicit set shadow DOM to false because of multiples click events to handle
+ */
+@customElement('ember-visualizations-app', { useShadowRoot: false })
 export default class App extends Application {
   modulePrefix = config.modulePrefix;
   podModulePrefix = config.podModulePrefix;

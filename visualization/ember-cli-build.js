@@ -17,6 +17,7 @@ module.exports = function (defaults) {
     fingerprint: {
       customHash: null,
       enabled: false,
+      exclude: ['assets/img'],
     },
     svgJar: {
       sourceDirs: [
@@ -32,13 +33,13 @@ module.exports = function (defaults) {
         },
       },
     },
-    // babel: {
-    //   sourceMaps: 'inline',
-    // },
-    // 'ember-cli-babel': {
-    //   includePolyfill: true,
-    //   sourceMaps: 'inline',
-    // },
+    babel: {
+      sourceMaps: 'inline',
+    },
+    'ember-cli-babel': {
+      includePolyfill: true,
+      sourceMaps: 'inline',
+    },
     emberCliConcat: {
       enabled: true,
       outputDir: 'assets',

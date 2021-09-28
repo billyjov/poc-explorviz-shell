@@ -19,25 +19,16 @@ export class ShellOutletComponent implements OnInit, OnDestroy {
   constructor(private router: Router, private authService: AuthService) {}
 
   ngOnInit() {
-    fromEvent(window, 'ember-app:landscapes').subscribe((event) => {
+    fromEvent(window, 'ember-app:landscapes').subscribe(() => {
       this.router.navigateByUrl('landscapes');
     });
 
     this.setLandscapeVisualization();
+    this.openVisualizationSidebar();
   }
 
   ngOnDestroy() {
     this.subscriptions.unsubscribe();
-  }
-
-  private setLandscapeVisualization(): void {
-    this.subscriptions.add(
-      fromEvent(window, 'landscapes:navigate-to-visualization').subscribe(
-        (_event: Partial<CustomEvent>) => {
-          this.navigateToRoute('/visualization');
-        }
-      )
-    );
   }
 
   public logout(): void {
@@ -57,6 +48,25 @@ export class ShellOutletComponent implements OnInit, OnDestroy {
   }
 
   public get appAlias(): string {
-    return JSON.parse(localStorage.getItem('currentLandscapeToken') as string)?.alias;
+    return JSON.parse(localStorage.getItem('currentLandscapeToken') as string)
+      ?.alias;
+  }
+
+  private setLandscapeVisualization(): void {
+    this.subscriptions.add(
+      fromEvent(window, 'landscapes:navigate-to-visualization').subscribe(
+        (_event: Partial<CustomEvent>) => {
+          this.navigateToRoute('/visualization');
+        }
+      )
+    );
+  }
+
+  private openVisualizationSidebar(): void {
+    this.subscriptions.add(
+      fromEvent(window, 'visualization:open-sidebar').subscribe(() =>
+        console.log('open sidebar')
+      )
+    );
   }
 }
