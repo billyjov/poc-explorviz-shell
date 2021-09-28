@@ -1,17 +1,7 @@
-# visualization
+# settings
 
 This README outlines the details of collaborating on this Ember application.
 A short introduction of this app could easily go here.
-
-## TODO
-
-- [ ] Add documentation for standalone app
-- [ ] Refactor imports in each files
-- [ ] Add a better strategy to handle security in standalone app
-- [ ] Questions about hard coded libraries files (Why not directly use npm package??)
-- [ ] Shadow Root should be open here in order
-to handle DOM events (native properly)
-
 
 ## Prerequisites
 
@@ -25,7 +15,7 @@ You will need the following things properly installed on your computer.
 ## Installation
 
 * `git clone <repository-url>` this repository
-* `cd visualization`
+* `cd settings`
 * `npm install`
 
 ## Running / Development
