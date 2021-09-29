@@ -1,10 +1,35 @@
 'use strict';
 
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
+const sass = require('sass');
 
 module.exports = function (defaults) {
   let app = new EmberApp(defaults, {
-    // Add options here
+    'ember-bootstrap': {
+      bootstrapVersion: 4,
+      importBootstrapCSS: true,
+    },
+    emberCliConcat: {
+      enabled: true,
+      outputDir: 'assets',
+      outputFileName: 'settings',
+      js: {
+        concat: true,
+        contentFor: 'concat-js',
+      },
+
+      css: {
+        concat: true,
+        contentFor: 'concat-css',
+      },
+    },
+    sassOptions: {
+      implementation: sass,
+    },
+    fingerprint: {
+      customHash: null,
+      enabled: false,
+    },
   });
 
   // Use `app.import` to add additional libraries to the generated
@@ -19,6 +44,13 @@ module.exports = function (defaults) {
   // modules that you would like to import into your application
   // please specify an object with the list of modules as keys
   // along with the exports of each module as its value.
+  // app.import('node_modules/bootstrap/dist/js/bootstrap.min.js');
+  app.import(
+    'node_modules/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css'
+  );
+  app.import(
+    'node_modules/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js'
+  );
 
   return app.toTree();
 };
