@@ -30,6 +30,19 @@ module.exports = function (defaults) {
       customHash: null,
       enabled: false,
     },
+    babel: {
+      sourceMaps: 'inline',
+    },
+    'ember-cli-babel': {
+      includePolyfill: true,
+      sourceMaps: 'inline',
+    },
+    svgJar: {
+      sourceDirs: [
+        'public', // default SVGJar lookup directory
+        'node_modules/@primer/octicons/build/svg',
+      ],
+    },
   });
 
   // Use `app.import` to add additional libraries to the generated
