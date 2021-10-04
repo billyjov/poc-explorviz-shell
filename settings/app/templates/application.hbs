@@ -1,10 +1,10 @@
 {{page-title "Settings"}}
 
 <div class="p-5">
-  <ColorPicker />
+  <ColorPicker @updateView={{this.updateColors}} />
 </div>
 
 {{!-- @isLandscapeView={{true}} --}}
-{{!-- @removeComponent={{@removeComponent}} @updateView={{this.updateColors}}
+{{!-- @removeComponent={{@removeComponent}}
 --}}
 {{outlet}}

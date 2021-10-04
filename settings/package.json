@@ -26,6 +26,7 @@
     "copy:bundles": "copyfiles -f dist/assets/settings.js dist/assets/settings.css ../shell/src/assets/settings"
   },
   "devDependencies": {
+    "@ember/jquery": "^1.1.0",
     "@ember/optional-features": "^2.0.0",
     "@ember/test-helpers": "^2.2.0",
     "@glimmer/component": "^1.0.3",
@@ -80,7 +81,6 @@
     "ember-data": "~3.25.0",
     "ember-export-application-global": "^2.0.1",
     "ember-fetch": "^8.0.4",
-    "ember-jquery": "^1.0.5",
     "ember-load-initializers": "^2.1.2",
     "ember-maybe-import-regenerator": "^0.1.6",
     "ember-page-title": "^6.2.1",
@@ -113,6 +113,7 @@
     "@primer/octicons": "^13.0.0",
     "bootstrap-colorpicker": "^3.2.0",
     "jquery": "^3.5.1",
+    "popper.js": "^1.16.0",
     "three": "^0.119.1"
   }
 }

@@ -1,1 +1,37 @@
 @import 'ember-bootstrap/bootstrap';
+
+.dropdown {
+  position: static;
+  display: flex;
+  align-items: center;
+}
+
+.dropdown>.dropdown-menu {
+  font-size: 14px;
+  width: 200px;
+
+  &.dropdown-item:nth-child(0):hover {
+    background-color: #fff;
+  }
+
+  >.dropdown-item:active {
+    background-color: #3f72a9;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .dropdown>.dropdown-menu {
+    // ml-3 and mr-3 are 1rem each
+    width: calc(100% - 2rem);
+    top: 100% !important;
+    transform: none !important;
+  }
+}
+
+.dropdown>.dropdown-menu.show~.navbar-user-button::after {
+  transform: rotateX(180deg);
+}
+
+.pointer-cursor {
+  cursor: pointer;
+}

@@ -1,15 +1,13 @@
-<div id="colorPresets" class="dropdown">
-  <button class="btn btn-outline-dark dropdown-toggle" type="button"
-    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Presets
-  </button>
-
-  <div class="dropdown-menu">
+<BsDropdown as |dd|>
+  <dd.button>Presets <span class="caret"></span></dd.button>
+  <dd.menu as |ddm|>
     {{#each this.colorSchemes as |colorScheme|}}
-    <div class="dropdown-item pointer-cursor" {{on "click" (fn
-      this.applyColorScheme colorScheme.identifier)}}>
-      {{colorScheme.name}}
-    </div>
+    <ddm.item>
+      <div class="dropdown-item pointer-cursor" {{on "click" (fn
+        this.applyColorScheme colorScheme.identifier)}}>
+        {{colorScheme.name}}
+      </div>
+    </ddm.item>
     {{/each}}
-  </div>
-</div>
+  </dd.menu>
+</BsDropdown>

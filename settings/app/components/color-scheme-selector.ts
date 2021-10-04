@@ -22,6 +22,7 @@ export default class ColorSchemeSelector extends Component<ColorSchemeSelectorAr
   applyColorScheme(scheme: string) {
     this.configuration.applyColorSchemeByName(scheme);
 
-    this.args.updateView();
+    // this.args.updateView();
+    console.log('apply color scheme: ', scheme);
   }
 }
