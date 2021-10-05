@@ -13,7 +13,7 @@ module.exports = function (defaults) {
     emberCliConcat: {
       enabled: true,
       outputDir: 'assets',
-      outputFileName: 'settings',
+      outputFileName: 'settings-bundle',
       js: {
         concat: true,
         contentFor: 'concat-js',
@@ -44,6 +44,7 @@ module.exports = function (defaults) {
         'node_modules/@primer/octicons/build/svg',
       ],
     },
+    storeConfigInMeta: false,
   });
 
   // Use `app.import` to add additional libraries to the generated

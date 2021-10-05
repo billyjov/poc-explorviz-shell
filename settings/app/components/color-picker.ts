@@ -15,7 +15,8 @@ export default class ColorPicker extends Component<Args> {
 
   @action
   close() {
-    this.args.removeComponent('color-picker');
+    // this.args.removeComponent('color-picker');
+
   }
 
   @action

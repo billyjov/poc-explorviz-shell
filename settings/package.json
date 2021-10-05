@@ -23,7 +23,7 @@
     "test:ember": "ember test",
     "build:all:prod": "npm run build:prod && npm run copy:bundles",
     "build:all": "npm run build && npm run copy:bundles",
-    "copy:bundles": "copyfiles -f dist/assets/settings.js dist/assets/settings.css ../shell/src/assets/settings"
+    "copy:bundles": "copyfiles -f dist/assets/settings-bundle.js dist/assets/settings-bundle.css ../shell/src/assets/settings"
   },
   "devDependencies": {
     "@ember/jquery": "^1.1.0",
