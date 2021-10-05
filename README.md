@@ -56,3 +56,8 @@ npm run start
 - For lazy loading chunks inside **shell** im using [Angular Extensions - Elements](https://github.com/angular-extensions/elements)
 
 - For concat ember JS and CSS files im using [Ember cli concat](https://github.com/sir-dunxalot/ember-cli-concat)
+
+#### Cannot embed app into another: 
+
+- https://stackoverflow.com/a/47391372/6432698
+
