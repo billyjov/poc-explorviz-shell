@@ -20,6 +20,7 @@ import { DynamicLandscapeData } from 'visualization/utils/landscape-schemes/dyna
 import AlertifyHandler from 'visualization/utils/alertify-handler';
 import { CollaborativeEvents } from 'collaborative-mode/utils/collaborative-data';
 import LandscapeTokenService from 'visualization/services/landscape-token';
+import { getHashCodeToClassMap } from 'visualization/utils/landscape-structure-helpers';
 
 export interface LandscapeData {
   structureLandscapeData: StructureLandscapeData;
@@ -227,8 +228,26 @@ export default class VisualizationController extends Controller {
 
   @action
   openDataSelection() {
-    // this.showDataSelection = true;
-    window.dispatchEvent(new CustomEvent('visualization:open-sidebar'));
+    window.dispatchEvent(
+      new CustomEvent('visualization:open-sidebar', {
+        detail: {
+          landscapeData: this.landscapeData,
+          applicationTraces:this.applicationTraces
+        },
+      })
+    );
+  }
+
+  get applicationTraces() {
+    const hashCodeToClassMap = getHashCodeToClassMap(
+      this.landscapeData?.application as (StructureLandscapeData | Application)
+    );
+
+    return this.landscapeData?.dynamicLandscapeData.filter((trace) =>
+      trace.spanList.any(
+        (span) => hashCodeToClassMap.get(span.hashCode) !== undefined
+      )
+    );
   }
 
   @action
