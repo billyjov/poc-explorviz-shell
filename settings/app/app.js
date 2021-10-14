@@ -10,6 +10,7 @@ export default class App extends Application {
   modulePrefix = config.modulePrefix;
   podModulePrefix = config.podModulePrefix;
   Resolver = Resolver;
+  rootElement = '#emberSettingsApp'
 }
 
 loadInitializers(App, config.modulePrefix);

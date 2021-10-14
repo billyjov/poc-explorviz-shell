@@ -7,10 +7,12 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "run:all": "node node_modules/@angular-architects/module-federation/src/server/mf-dev-server.js"
   },
   "private": true,
   "dependencies": {
+    "@angular-architects/module-federation": "^12.3.0-beta.3",
     "@angular-extensions/elements": "^11.0.1",
     "@angular/animations": "~12.2.6",
     "@angular/common": "~12.2.6",

@@ -41,6 +41,10 @@
       <div class="card mt-3 border-radius-0">
         <div class="card-body d-flex flex-column">
           <h5 class="text-center">Trace Overview</h5>
+
+          <!-- <ng-container #traceContainer></ng-container> -->
+
+          <app-trace-overview-host></app-trace-overview-host>
           <button class="btn btn-outline-info"
             (click)="showTraceOverview = false">
             Close trace overview

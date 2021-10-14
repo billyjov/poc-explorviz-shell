@@ -19,7 +19,7 @@ interface Country {
 const COUNTRIES: Country[] = [
   {
     id: 1,
-    name: 'Russia',
+    name: 'Russias',
     flag: 'f/f3/Flag_of_Russia.svg',
     area: 17075200,
     population: 146989754,
@@ -81,7 +81,6 @@ export class NgbdSortableHeader {
     this.sort.emit({ column: this.sortable, direction: this.direction });
   }
 }
-
 
 @Component({
   selector: 'app-root',
