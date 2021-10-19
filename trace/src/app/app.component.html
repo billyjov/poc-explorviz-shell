@@ -4,24 +4,27 @@
   <table class="table table-striped">
     <thead>
       <tr>
-        <th scope="col">#</th>
-        <th scope="col" sortable="name" (sort)="onSort($event)">Country</th>
-        <th scope="col" sortable="area" (sort)="onSort($event)">Area</th>
-        <th scope="col" sortable="population" (sort)="onSort($event)">Population
+        <th scope="col">Trace ID</th>
+        <th scope="col" sortable="name" (sort)="onSort($event)">
+          First Clazz
+        </th>
+        <th scope="col" sortable="area" (sort)="onSort($event)">
+          Last Clazz
+        </th>
+        <th scope="col" sortable="population" (sort)="onSort($event)">
+          Duration in
         </th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let country of countries">
-        <th scope="row">{{ country.id }}</th>
+      <tr *ngFor="let trace of landscapeData.dynamicLandscapeData">
+        <th scope="row">{{ trace.traceId }}</th>
         <td>
-          <img
-            [src]="'https://upload.wikimedia.org/wikipedia/commons/' + country.flag"
-            class="mr-2" style="width: 20px">
-          {{ country.name }}
+
+          -
         </td>
-        <td>{{ country.area | number }}</td>
-        <td>{{ country.population | number }}</td>
+        <td>-</td>
+        <td>-</td>
       </tr>
     </tbody>
   </table>

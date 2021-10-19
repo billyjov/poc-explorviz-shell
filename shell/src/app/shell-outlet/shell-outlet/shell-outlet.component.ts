@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { fromEvent, Subscription } from 'rxjs';
 
 import { AuthService } from 'src/app/core/auth/auth.service';
+import { EventBridgeService } from 'src/app/core/event-bridge/event-bridge.service';
 
 @Component({
   selector: 'app-shell-outlet',
@@ -17,12 +18,18 @@ export class ShellOutletComponent implements OnInit, OnDestroy {
 
   private subscriptions: Subscription = new Subscription();
 
-  constructor(private router: Router, private authService: AuthService) {}
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+    private eventBridgeService: EventBridgeService
+  ) {}
 
   ngOnInit() {
-    fromEvent(window, 'ember-app:landscapes').subscribe(() => {
-      this.router.navigateByUrl('landscapes');
-    });
+    this.subscriptions.add(
+      fromEvent(window, 'ember-app:landscapes').subscribe(() => {
+        this.router.navigateByUrl('landscapes');
+      })
+    );
 
     this.setLandscapeVisualization();
     this.openVisualizationSidebar();
@@ -69,9 +76,14 @@ export class ShellOutletComponent implements OnInit, OnDestroy {
 
   private openVisualizationSidebar(): void {
     this.subscriptions.add(
-      fromEvent(window, 'visualization:open-sidebar').subscribe(() => {
-        this.isSidebarOpen = true;
-      })
+      fromEvent(window, 'visualization:open-sidebar').subscribe(
+        (event: Partial<CustomEvent>) => {
+          if (!!event.detail) {
+            this.eventBridgeService.landscapeDataSubject.next(event.detail);
+          }
+          this.isSidebarOpen = true;
+        }
+      )
     );
   }
 }

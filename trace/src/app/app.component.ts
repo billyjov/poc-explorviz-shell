@@ -3,10 +3,12 @@ import {
   Directive,
   EventEmitter,
   Input,
+  OnInit,
   Output,
   QueryList,
   ViewChildren,
 } from '@angular/core';
+import { LandscapeData } from './shared/models/landscape-data';
 
 interface Country {
   id: number;
@@ -87,10 +89,18 @@ export class NgbdSortableHeader {
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   countries = COUNTRIES;
 
+  public landscapeData: LandscapeData;
+
   @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>;
+
+
+  ngOnInit() {
+    console.log('test data works: ', this.landscapeData);
+  }
+
 
   onSort({ column, direction }: SortEvent) {
     // resetting other headers
