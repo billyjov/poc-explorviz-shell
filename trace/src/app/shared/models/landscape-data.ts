@@ -1,7 +1,7 @@
 export interface LandscapeData {
   structureLandscapeData: StructureLandscapeData;
   dynamicLandscapeData: DynamicLandscapeData;
-  application?: Application;
+  application?: Application | any;
 }
 
 

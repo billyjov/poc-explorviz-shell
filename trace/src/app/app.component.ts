@@ -8,7 +8,14 @@ import {
   QueryList,
   ViewChildren,
 } from '@angular/core';
-import { LandscapeData } from './shared/models/landscape-data';
+import { getValueOfMap } from './shared/helpers/get-value-of-map';
+import {
+  DynamicLandscapeData,
+  LandscapeData,
+} from './shared/models/landscape-data';
+import { Class } from './shared/utils/landscape-schemes/structure-data';
+import { getHashCodeToClassMap } from './shared/utils/landscape-structure-helpers';
+import { getSortedTraceSpans } from './shared/utils/trace-helpers';
 
 interface Country {
   id: number;
@@ -17,37 +24,6 @@ interface Country {
   area: number;
   population: number;
 }
-
-const COUNTRIES: Country[] = [
-  {
-    id: 1,
-    name: 'Russias',
-    flag: 'f/f3/Flag_of_Russia.svg',
-    area: 17075200,
-    population: 146989754,
-  },
-  {
-    id: 2,
-    name: 'Canada',
-    flag: 'c/cf/Flag_of_Canada.svg',
-    area: 9976140,
-    population: 36624199,
-  },
-  {
-    id: 3,
-    name: 'United States',
-    flag: 'a/a4/Flag_of_the_United_States.svg',
-    area: 9629091,
-    population: 324459463,
-  },
-  {
-    id: 4,
-    name: 'China',
-    flag: 'f/fa/Flag_of_the_People%27s_Republic_of_China.svg',
-    area: 9596960,
-    population: 1409517397,
-  },
-];
 
 export type SortColumn = keyof Country | '';
 export type SortDirection = 'asc' | 'desc' | '';
@@ -90,17 +66,90 @@ export class NgbdSortableHeader {
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  countries = COUNTRIES;
 
+  /**
+   * Provided by Shell app.
+   *
+   * @type {LandscapeData}
+   * @memberof AppComponent
+   */
   public landscapeData: LandscapeData;
+  public filteredTraces: DynamicLandscapeData;
+  public isShellPresent: boolean = false;
+  public sortBy: string = 'traceId';
 
   @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>;
 
-
   ngOnInit() {
-    console.log('test data works: ', this.landscapeData);
+
   }
 
+  public getFirstClass(id: string) {
+    return getValueOfMap([this.firstClasses, id]);
+  }
+
+  public getLastClass(id: string) {
+    return getValueOfMap([this.lastClasses, id]);
+  }
+
+  private get firstClasses() {
+    const sortedSpanLists = this.applicationTraces.map((trace) =>
+      getSortedTraceSpans(trace)
+    );
+
+    const hashCodeToClassInLandscapeMap = getHashCodeToClassMap(
+      this.landscapeData.structureLandscapeData
+    );
+
+    const traceIdToFirstClassMap = new Map<string, Class>();
+
+    this.applicationTraces.forEach((trace, index) => {
+      const spanList = sortedSpanLists[index];
+
+      const firstClassHashCode = spanList[0].hashCode;
+      const firstClass = hashCodeToClassInLandscapeMap.get(firstClassHashCode)!;
+
+      traceIdToFirstClassMap.set(trace.traceId, firstClass);
+    });
+
+    return traceIdToFirstClassMap;
+  }
+
+  private get lastClasses() {
+    const sortedSpanLists = this.applicationTraces.map((trace) =>
+      getSortedTraceSpans(trace)
+    );
+
+    const hashCodeToClassInLandscapeMap = getHashCodeToClassMap(
+      this.landscapeData.structureLandscapeData
+    );
+
+    const traceIdToLastClassMap = new Map<string, Class>();
+
+    this.applicationTraces.forEach((trace, index) => {
+      const spanList = sortedSpanLists[index];
+
+      const lastClassHashCode = spanList[spanList.length - 1].hashCode;
+      const lastClass = hashCodeToClassInLandscapeMap.get(lastClassHashCode)!;
+
+      traceIdToLastClassMap.set(trace.traceId, lastClass);
+    });
+
+    return traceIdToLastClassMap;
+  }
+
+  private get applicationTraces() {
+    const hashCodeToClassMap = getHashCodeToClassMap(
+      this.landscapeData.application
+    );
+
+    return this.landscapeData.dynamicLandscapeData.filter(
+      (trace) =>
+        trace.spanList.some(
+          (span) => hashCodeToClassMap.get(span.hashCode) !== undefined
+        )
+    );
+  }
 
   onSort({ column, direction }: SortEvent) {
     // resetting other headers
@@ -110,14 +159,16 @@ export class AppComponent implements OnInit {
       }
     });
 
-    // sorting countries
+    // sorting traces
     if (direction === '' || column === '') {
-      this.countries = COUNTRIES;
+      this.filteredTraces = this.landscapeData.dynamicLandscapeData;
     } else {
-      this.countries = [...COUNTRIES].sort((a, b) => {
-        const res = compare(a[column], b[column]);
-        return direction === 'asc' ? res : -res;
-      });
+      this.filteredTraces = [...this.landscapeData.dynamicLandscapeData].sort(
+        (a, b) => {
+          const res = compare(a[column], b[column]);
+          return direction === 'asc' ? res : -res;
+        }
+      );
     }
   }
 }

@@ -1,10 +1,8 @@
-<div class="p-5">
-
-
+<div [ngClass]="{'p-5': !isShellPresent}">
   <table class="table table-striped">
     <thead>
       <tr>
-        <th scope="col">Trace ID</th>
+        <th scope="col" >Trace ID</th>
         <th scope="col" sortable="name" (sort)="onSort($event)">
           First Clazz
         </th>
@@ -19,11 +17,8 @@
     <tbody>
       <tr *ngFor="let trace of landscapeData.dynamicLandscapeData">
         <th scope="row">{{ trace.traceId }}</th>
-        <td>
-
-          -
-        </td>
-        <td>-</td>
+        <td>{{ getFirstClass(trace.traceId)?.name }}</td>
+        <td>{{ getLastClass(trace.traceId)?.name }}</td>
         <td>-</td>
       </tr>
     </tbody>
