@@ -1,0 +1,13 @@
+<h5 align="center">
+  Trace Replayer
+</h5>
+
+<app-trace-navigation [currentTraceStepIndex]="currentTraceStepIndex"
+  [traceStepCount]="traceSteps.length"></app-trace-navigation>
+
+<app-trace-steps-details [operationName]="operationName"
+  [sourceClass]="sourceClass" [targetClass]="targetClass"
+  [sourceApplicationName]="sourceApplication?.name"
+  [targetApplicationName]="targetApplication?.name"
+  [spanStartTime]="currentTraceStep?.startTime"
+  [spanEndTime]="currentTraceStep?.endTime"></app-trace-steps-details>

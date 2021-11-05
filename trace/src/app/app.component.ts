@@ -13,6 +13,7 @@ import {
   DynamicLandscapeData,
   LandscapeData,
 } from './shared/models/landscape-data';
+import { Trace } from './shared/utils/landscape-schemes/dynamic-data';
 import { Class } from './shared/utils/landscape-schemes/structure-data';
 import { getHashCodeToClassMap } from './shared/utils/landscape-structure-helpers';
 import { getSortedTraceSpans } from './shared/utils/trace-helpers';
@@ -66,7 +67,6 @@ export class NgbdSortableHeader {
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-
   /**
    * Provided by Shell app.
    *
@@ -76,13 +76,24 @@ export class AppComponent implements OnInit {
   public landscapeData: LandscapeData;
   public filteredTraces: DynamicLandscapeData;
   public isShellPresent: boolean = false;
+  public selectedTrace: Trace | null = null;
   public sortBy: string = 'traceId';
 
   @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>;
 
-  ngOnInit() {
+  ngOnInit() {}
 
+  public selectTrace(trace: Trace): void {
+    // Reset highlighting when highlighted trace is clicked again
+    if (trace === this.selectedTrace) {
+      this.selectedTrace = null;
+      // this.args.removeHighlighting();
+      return;
+    }
+
+    this.selectedTrace = trace;
   }
+
 
   public getFirstClass(id: string) {
     return getValueOfMap([this.firstClasses, id]);
@@ -143,11 +154,10 @@ export class AppComponent implements OnInit {
       this.landscapeData.application
     );
 
-    return this.landscapeData.dynamicLandscapeData.filter(
-      (trace) =>
-        trace.spanList.some(
-          (span) => hashCodeToClassMap.get(span.hashCode) !== undefined
-        )
+    return this.landscapeData.dynamicLandscapeData.filter((trace) =>
+      trace.spanList.some(
+        (span) => hashCodeToClassMap.get(span.hashCode) !== undefined
+      )
     );
   }
 

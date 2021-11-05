@@ -2,7 +2,7 @@
   <table class="table table-striped">
     <thead>
       <tr>
-        <th scope="col" >Trace ID</th>
+        <th scope="col">Trace ID</th>
         <th scope="col" sortable="name" (sort)="onSort($event)">
           First Clazz
         </th>
@@ -15,12 +15,20 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let trace of landscapeData.dynamicLandscapeData">
-        <th scope="row">{{ trace.traceId }}</th>
-        <td>{{ getFirstClass(trace.traceId)?.name }}</td>
-        <td>{{ getLastClass(trace.traceId)?.name }}</td>
-        <td>-</td>
-      </tr>
+      <ng-container *ngFor="let trace of landscapeData.dynamicLandscapeData">
+        <tr (click)="selectTrace(trace)"
+          [hidden]="selectedTrace && selectedTrace.traceId !== trace.traceId">
+          <th scope="row">{{ trace.traceId }}</th>
+          <td>{{ getFirstClass(trace.traceId)?.name }}</td>
+          <td>{{ getLastClass(trace.traceId)?.name }}</td>
+          <td>-</td>
+        </tr>
+      </ng-container>
     </tbody>
   </table>
+  <ng-container *ngIf="selectedTrace">
+    <app-trace-replayer-main [selectedTrace]="selectedTrace"
+      [structureData]="landscapeData.structureLandscapeData">
+    </app-trace-replayer-main>
+  </ng-container>
 </div>
