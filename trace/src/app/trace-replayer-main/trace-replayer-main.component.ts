@@ -21,17 +21,16 @@ export class TraceReplayerMainComponent implements OnInit {
   isReplayAnimated: boolean = true;
 
   ngOnInit(): void {
-    console.log('selectedTrace: ', this.selectedTrace);
     this.traceSteps = getSortedTraceSpans(this.selectedTrace as Trace);
 
     if (this.traceSteps.length > 0) {
       const [firstStep] = this.traceSteps;
       this.currentTraceStep = firstStep;
 
-      //  this.args.highlightTrace(this.args.selectedTrace, firstStep.spanId);
+      this.highlightTrace(this.selectedTrace, firstStep.spanId);
 
       if (this.isReplayAnimated) {
-        // this.args.moveCameraTo(this.currentTraceStep);
+        this.moveCameraTo(this.currentTraceStep);
       }
     }
   }
@@ -89,5 +88,84 @@ export class TraceReplayerMainComponent implements OnInit {
       )?.name;
     }
     return undefined;
+  }
+
+  selectNextTraceStep(): void {
+    // Can only select next step if a trace is selected
+    if (!this.currentTraceStep) {
+      return;
+    }
+
+    const currentTracePosition = this.traceSteps.findIndex(
+      (span) => span === this.currentTraceStep
+    );
+
+    if (currentTracePosition === -1) {
+      return;
+    }
+
+    const nextStepPosition = currentTracePosition + 1;
+
+    if (nextStepPosition > this.traceSteps.length - 1) {
+      return;
+    }
+
+    this.currentTraceStep = this.traceSteps[nextStepPosition];
+
+    this.highlightTrace(this.selectedTrace, this.currentTraceStep.spanId);
+
+    if (this.isReplayAnimated) {
+      this.moveCameraTo(this.currentTraceStep);
+    }
+  }
+
+  selectPreviousTraceStep(): void {
+    // Can only select next step if a trace is selected
+    if (!this.currentTraceStep) {
+      return;
+    }
+
+    const currentTracePosition = this.traceSteps.findIndex(
+      (span) => span === this.currentTraceStep
+    );
+
+    if (currentTracePosition === -1) {
+      return;
+    }
+
+    const previousStepPosition = currentTracePosition - 1;
+
+    if (previousStepPosition < 0) {
+      return;
+    }
+
+    this.currentTraceStep = this.traceSteps[previousStepPosition];
+
+    this.highlightTrace(this.selectedTrace, this.currentTraceStep.spanId);
+
+    if (this.isReplayAnimated) {
+      this.moveCameraTo(this.currentTraceStep);
+    }
+  }
+
+  private moveCameraTo(step: Span | null): void {
+    window.dispatchEvent(
+      new CustomEvent('trace:move-camera-to', {
+        detail: {
+          step,
+        },
+      })
+    );
+  }
+
+  private highlightTrace(trace: Trace | null, traceStep: string): void {
+    window.dispatchEvent(
+      new CustomEvent('trace:highlight-trace', {
+        detail: {
+          trace,
+          traceStep,
+        },
+      })
+    );
   }
 }

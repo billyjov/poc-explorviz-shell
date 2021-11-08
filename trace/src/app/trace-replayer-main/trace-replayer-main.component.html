@@ -3,7 +3,9 @@
 </h5>
 
 <app-trace-navigation [currentTraceStepIndex]="currentTraceStepIndex"
-  [traceStepCount]="traceSteps.length"></app-trace-navigation>
+  [traceStepCount]="traceSteps.length"
+  (selectNextTraceStep)="selectNextTraceStep()"
+  (selectPreviousTraceStep)="selectPreviousTraceStep()"></app-trace-navigation>
 
 <app-trace-steps-details [operationName]="operationName"
   [sourceClass]="sourceClass" [targetClass]="targetClass"

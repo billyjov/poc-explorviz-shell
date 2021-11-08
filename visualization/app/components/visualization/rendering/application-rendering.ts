@@ -19,16 +19,27 @@ import { restartableTask, task } from 'ember-concurrency-decorators';
 import ApplicationObject3D from 'visualization/view-objects/3d/application/application-object-3d';
 import CommunicationArrowMesh from 'visualization/view-objects/3d/application/communication-arrow-mesh';
 import {
-  Class, isClass, Package,
+  Class,
+  isClass,
+  Package,
 } from 'visualization/utils/landscape-schemes/structure-data';
-import computeDrawableClassCommunication, { DrawableClassCommunication } from 'visualization/utils/landscape-rendering/class-communication-computer';
+import computeDrawableClassCommunication, {
+  DrawableClassCommunication,
+} from 'visualization/utils/landscape-rendering/class-communication-computer';
 import { LandscapeData } from 'visualization/controllers/visualization';
-import { Span, Trace } from 'visualization/utils/landscape-schemes/dynamic-data';
+import {
+  Span,
+  Trace,
+} from 'visualization/utils/landscape-schemes/dynamic-data';
 import { getAllClassesInApplication } from 'visualization/utils/application-helpers';
 import { perform } from 'ember-concurrency-ts';
 import { Position2D } from 'visualization/modifiers/interaction-modifier';
 import {
-  highlight, highlightModel, highlightTrace, removeHighlighting, updateHighlighting,
+  highlight,
+  highlightModel,
+  highlightTrace,
+  removeHighlighting,
+  updateHighlighting,
 } from 'visualization/utils/application-rendering/highlighting';
 import {
   applyDefaultApplicationLayout,
@@ -41,6 +52,8 @@ import {
   toggleComponentMeshState,
 } from 'visualization/utils/application-rendering/entity-manipulation';
 import HammerInteraction from 'visualization/utils/hammer-interaction';
+
+import { fromEvent } from 'rxjs';
 
 interface Args {
   readonly landscapeData: LandscapeData;
@@ -56,18 +69,18 @@ interface Args {
 }
 
 type PopupData = {
-  mouseX: number,
-  mouseY: number,
-  entity: Package | Class | DrawableClassCommunication
+  mouseX: number;
+  mouseY: number;
+  entity: Package | Class | DrawableClassCommunication;
 };
 
 type LayoutData = {
-  height: number,
-  width: number,
-  depth: number,
-  positionX: number,
-  positionY: number,
-  positionZ: number
+  height: number;
+  width: number;
+  depth: number;
+  positionX: number;
+  positionY: number;
+  positionZ: number;
 };
 
 export default class ApplicationRendering extends GlimmerComponent<Args> {
@@ -116,12 +129,17 @@ export default class ApplicationRendering extends GlimmerComponent<Args> {
   readonly communicationRendering: CommunicationRendering;
 
   get rightClickMenuItems() {
-    const pauseButtonTitle = this.args.visualizationPaused ? 'Resume Visualization' : 'Pause Visualization';
+    const pauseButtonTitle = this.args.visualizationPaused
+      ? 'Resume Visualization'
+      : 'Pause Visualization';
 
     return [
       { title: 'Reset View', action: this.resetView },
       { title: 'Open All Components', action: this.openAllComponents },
-      { title: pauseButtonTitle, action: this.args.toggleVisualizationUpdating },
+      {
+        title: pauseButtonTitle,
+        action: this.args.toggleVisualizationUpdating,
+      },
       { title: 'Open Sidebar', action: this.args.openDataSelection },
     ];
   }
@@ -152,12 +170,32 @@ export default class ApplicationRendering extends GlimmerComponent<Args> {
 
     const { application, dynamicLandscapeData } = this.args.landscapeData;
 
-    this.applicationObject3D = new ApplicationObject3D(application!,
-      new Map(), dynamicLandscapeData);
+    this.applicationObject3D = new ApplicationObject3D(
+      application!,
+      new Map(),
+      dynamicLandscapeData
+    );
 
-    this.communicationRendering = new CommunicationRendering(this.configuration);
+    this.communicationRendering = new CommunicationRendering(
+      this.configuration
+    );
 
     this.hoveredObject = null;
+
+    fromEvent(window, 'trace:highlight-trace').subscribe(
+      (event: CustomEvent) => {
+        if (event.detail) {
+          this.highlightTrace(event.detail.trace, event.detail.traceStep);
+        }
+      }
+    );
+    fromEvent(window, 'trace:move-camera-to').subscribe(
+      (event: CustomEvent) => {
+        if (event.detail) {
+          this.moveCameraTo(event.detail.step);
+        }
+      }
+    );
   }
 
   @action
@@ -185,8 +223,10 @@ export default class ApplicationRendering extends GlimmerComponent<Args> {
 
     // Display application nicely for first rendering
     applyDefaultApplicationLayout(this.applicationObject3D);
-    this.communicationRendering.addCommunication(this.applicationObject3D,
-      this.drawableClassCommunications);
+    this.communicationRendering.addCommunication(
+      this.applicationObject3D,
+      this.drawableClassCommunications
+    );
     this.applicationObject3D.resetRotation();
   }
 
@@ -284,9 +324,16 @@ export default class ApplicationRendering extends GlimmerComponent<Args> {
     // User clicked on blank spot on the canvas
     if (mesh === undefined) {
       removeHighlighting(this.applicationObject3D);
-    } else if (mesh instanceof ComponentMesh || mesh instanceof ClazzMesh
-      || mesh instanceof ClazzCommunicationMesh) {
-      highlight(mesh, this.applicationObject3D, this.drawableClassCommunications);
+    } else if (
+      mesh instanceof ComponentMesh ||
+      mesh instanceof ClazzMesh ||
+      mesh instanceof ClazzCommunicationMesh
+    ) {
+      highlight(
+        mesh,
+        this.applicationObject3D,
+        this.drawableClassCommunications
+      );
     }
   }
 
@@ -302,16 +349,26 @@ export default class ApplicationRendering extends GlimmerComponent<Args> {
     // Toggle open state of clicked component
     if (mesh instanceof ComponentMesh) {
       toggleComponentMeshState(mesh, this.applicationObject3D);
-      this.communicationRendering.addCommunication(this.applicationObject3D,
-        this.drawableClassCommunications);
-      updateHighlighting(this.applicationObject3D, this.drawableClassCommunications);
+      this.communicationRendering.addCommunication(
+        this.applicationObject3D,
+        this.drawableClassCommunications
+      );
+      updateHighlighting(
+        this.applicationObject3D,
+        this.drawableClassCommunications
+      );
       // Close all components since foundation shall never be closed itself
     } else if (mesh instanceof FoundationMesh) {
       closeAllComponents(this.applicationObject3D);
       // Re-compute communication and highlighting
-      this.communicationRendering.addCommunication(this.applicationObject3D,
-        this.drawableClassCommunications);
-      updateHighlighting(this.applicationObject3D, this.drawableClassCommunications);
+      this.communicationRendering.addCommunication(
+        this.applicationObject3D,
+        this.drawableClassCommunications
+      );
+      updateHighlighting(
+        this.applicationObject3D,
+        this.drawableClassCommunications
+      );
     }
   }
 
@@ -332,7 +389,9 @@ export default class ApplicationRendering extends GlimmerComponent<Args> {
       this.hoveredObject.resetHoverEffect();
       this.hoveredObject = null;
     } else if (mesh instanceof BaseMesh && enableHoverEffects) {
-      if (this.hoveredObject) { this.hoveredObject.resetHoverEffect(); }
+      if (this.hoveredObject) {
+        this.hoveredObject.resetHoverEffect();
+      }
 
       this.hoveredObject = mesh;
       mesh.applyHoverEffect();
@@ -359,7 +418,10 @@ export default class ApplicationRendering extends GlimmerComponent<Args> {
   /*   handleMouseEnter() {
   } */
   @action
-  handleMouseStop(intersection: THREE.Intersection | null, mouseOnCanvas: Position2D) {
+  handleMouseStop(
+    intersection: THREE.Intersection | null,
+    mouseOnCanvas: Position2D
+  ) {
     if (!intersection) return;
     const mesh = intersection.object;
     this.mouseStopOnMesh(mesh, mouseOnCanvas);
@@ -368,8 +430,11 @@ export default class ApplicationRendering extends GlimmerComponent<Args> {
   @action
   mouseStopOnMesh(mesh: THREE.Object3D, mouseOnCanvas: Position2D) {
     // Show information as popup is mouse stopped on top of a mesh
-    if ((mesh instanceof ClazzMesh || mesh instanceof ComponentMesh
-      || mesh instanceof ClazzCommunicationMesh)) {
+    if (
+      mesh instanceof ClazzMesh ||
+      mesh instanceof ComponentMesh ||
+      mesh instanceof ClazzCommunicationMesh
+    ) {
       this.popupData = {
         mouseX: mouseOnCanvas.x,
         mouseY: mouseOnCanvas.y,
@@ -379,7 +444,7 @@ export default class ApplicationRendering extends GlimmerComponent<Args> {
   }
 
   @action
-  handlePanning(delta: { x: number, y: number }, button: 1 | 2 | 3) {
+  handlePanning(delta: { x: number; y: number }, button: 1 | 2 | 3) {
     const LEFT_MOUSE_BUTTON = 1;
     const RIGHT_MOUSE_BUTTON = 3;
 
@@ -389,7 +454,7 @@ export default class ApplicationRendering extends GlimmerComponent<Args> {
       this.applicationObject3D.rotation.y += delta.x / 100;
     } else if (button === LEFT_MOUSE_BUTTON) {
       // Move landscape further if camera is far away
-      const ZOOM_CORRECTION = (Math.abs(this.camera.position.z) / 4.0);
+      const ZOOM_CORRECTION = Math.abs(this.camera.position.z) / 4.0;
 
       // Divide delta by 100 to achieve reasonable panning speeds
       const xOffset = (delta.x / 100) * -ZOOM_CORRECTION;
@@ -405,40 +470,45 @@ export default class ApplicationRendering extends GlimmerComponent<Args> {
 
   // #region SCENE POPULATION
 
-  @task*
-  loadNewApplication() {
+  @task *loadNewApplication() {
     this.applicationObject3D.dataModel = this.args.landscapeData.application!;
-    this.applicationObject3D.traces = this.args.landscapeData.dynamicLandscapeData;
+    this.applicationObject3D.traces =
+      this.args.landscapeData.dynamicLandscapeData;
     yield perform(this.populateScene);
   }
 
-  @restartableTask*
-  populateScene() {
+  @restartableTask *populateScene() {
     try {
       const workerPayload = {
         structure: this.applicationObject3D.dataModel,
         dynamic: this.applicationObject3D.traces,
       };
 
-      const layoutedApplication: Map<string, LayoutData> = yield this.worker.postMessage('city-layouter', workerPayload);
+      const layoutedApplication: Map<string, LayoutData> =
+        yield this.worker.postMessage('city-layouter', workerPayload);
 
       // Remember state of components
       const { openComponentIds } = this.applicationObject3D;
 
       // Converting plain JSON layout data due to worker limitations
-      const boxLayoutMap = ApplicationRendering.convertToBoxLayoutMap(layoutedApplication);
+      const boxLayoutMap =
+        ApplicationRendering.convertToBoxLayoutMap(layoutedApplication);
       this.applicationObject3D.boxLayoutMap = boxLayoutMap;
 
       // Clean up old application
       this.cleanUpApplication();
 
       // Add new meshes to application
-      EntityRendering.addFoundationAndChildrenToApplication(this.applicationObject3D,
-        this.configuration.applicationColors);
+      EntityRendering.addFoundationAndChildrenToApplication(
+        this.applicationObject3D,
+        this.configuration.applicationColors
+      );
 
       if (!this.globeMesh) {
         // Add globe for communication that comes from the outside
-        this.globeMesh = EntityRendering.addGlobeToApplication(this.applicationObject3D);
+        this.globeMesh = EntityRendering.addGlobeToApplication(
+          this.applicationObject3D
+        );
 
         const period = 1000;
         const times = [0, period];
@@ -459,8 +529,10 @@ export default class ApplicationRendering extends GlimmerComponent<Args> {
       // Restore old state of components
       restoreComponentState(this.applicationObject3D, openComponentIds);
       this.updateDrawableClassCommunications();
-      this.communicationRendering.addCommunication(this.applicationObject3D,
-        this.drawableClassCommunications);
+      this.communicationRendering.addCommunication(
+        this.applicationObject3D,
+        this.drawableClassCommunications
+      );
       this.addLabels();
 
       this.scene.add(this.applicationObject3D);
@@ -473,11 +545,15 @@ export default class ApplicationRendering extends GlimmerComponent<Args> {
    * Iterates over all box meshes and calls respective functions to label them
    */
   addLabels() {
-    if (!this.font) { return; }
+    if (!this.font) {
+      return;
+    }
 
     const clazzTextColor = this.configuration.applicationColors.clazzText;
-    const componentTextColor = this.configuration.applicationColors.componentText;
-    const foundationTextColor = this.configuration.applicationColors.foundationText;
+    const componentTextColor =
+      this.configuration.applicationColors.componentText;
+    const foundationTextColor =
+      this.configuration.applicationColors.foundationText;
 
     // Label all entities (excluding communication)
     this.applicationObject3D.getBoxMeshes().forEach((mesh) => {
@@ -495,13 +571,14 @@ export default class ApplicationRendering extends GlimmerComponent<Args> {
     const { structureLandscapeData, application } = this.args.landscapeData;
     const drawableClassCommunications = computeDrawableClassCommunication(
       structureLandscapeData,
-      this.applicationObject3D.traces,
+      this.applicationObject3D.traces
     );
 
     const allClasses = new Set(getAllClassesInApplication(application!));
 
     const communicationInApplication = drawableClassCommunications.filter(
-      (comm) => allClasses.has(comm.sourceClass) || allClasses.has(comm.targetClass),
+      (comm) =>
+        allClasses.has(comm.sourceClass) || allClasses.has(comm.targetClass)
     );
 
     this.drawableClassCommunications = communicationInApplication;
@@ -523,7 +600,9 @@ export default class ApplicationRendering extends GlimmerComponent<Args> {
    * Main rendering function
    */
   render() {
-    if (this.isDestroyed) { return; }
+    if (this.isDestroyed) {
+      return;
+    }
 
     const animationId = requestAnimationFrame(this.render);
     this.animationFrameId = animationId;
@@ -534,7 +613,9 @@ export default class ApplicationRendering extends GlimmerComponent<Args> {
     }
 
     if (this.animationMixers) {
-      this.animationMixers.forEach((mixer) => mixer.update(this.clock.getDelta()));
+      this.animationMixers.forEach((mixer) =>
+        mixer.update(this.clock.getDelta())
+      );
     }
 
     this.renderer.render(this.scene, this.camera);
@@ -614,9 +695,14 @@ export default class ApplicationRendering extends GlimmerComponent<Args> {
         openComponentMesh(ancestorMesh, this.applicationObject3D);
       }
     });
-    this.communicationRendering.addCommunication(this.applicationObject3D,
-      this.drawableClassCommunications);
-    updateHighlighting(this.applicationObject3D, this.drawableClassCommunications);
+    this.communicationRendering.addCommunication(
+      this.applicationObject3D,
+      this.drawableClassCommunications
+    );
+    updateHighlighting(
+      this.applicationObject3D,
+      this.drawableClassCommunications
+    );
   }
 
   /**
@@ -630,9 +716,14 @@ export default class ApplicationRendering extends GlimmerComponent<Args> {
     if (mesh instanceof ComponentMesh) {
       closeComponentMesh(mesh, this.applicationObject3D);
     }
-    this.communicationRendering.addCommunication(this.applicationObject3D,
-      this.drawableClassCommunications);
-    updateHighlighting(this.applicationObject3D, this.drawableClassCommunications);
+    this.communicationRendering.addCommunication(
+      this.applicationObject3D,
+      this.drawableClassCommunications
+    );
+    updateHighlighting(
+      this.applicationObject3D,
+      this.drawableClassCommunications
+    );
   }
 
   /**
@@ -648,9 +739,14 @@ export default class ApplicationRendering extends GlimmerComponent<Args> {
       openComponentsRecursively(child, this.applicationObject3D);
     });
 
-    this.communicationRendering.addCommunication(this.applicationObject3D,
-      this.drawableClassCommunications);
-    updateHighlighting(this.applicationObject3D, this.drawableClassCommunications);
+    this.communicationRendering.addCommunication(
+      this.applicationObject3D,
+      this.drawableClassCommunications
+    );
+    updateHighlighting(
+      this.applicationObject3D,
+      this.drawableClassCommunications
+    );
   }
 
   /**
@@ -660,7 +756,11 @@ export default class ApplicationRendering extends GlimmerComponent<Args> {
    */
   @action
   highlightModel(entity: Package | Class) {
-    highlightModel(entity, this.applicationObject3D, this.drawableClassCommunications);
+    highlightModel(
+      entity,
+      this.applicationObject3D,
+      this.drawableClassCommunications
+    );
   }
 
   /**
@@ -680,7 +780,12 @@ export default class ApplicationRendering extends GlimmerComponent<Args> {
   moveCameraTo(emberModel: Class | Span) {
     const applicationCenter = this.applicationObject3D.layout.center;
 
-    moveCameraTo(emberModel, applicationCenter, this.camera, this.applicationObject3D);
+    moveCameraTo(
+      emberModel,
+      applicationCenter,
+      this.camera,
+      this.applicationObject3D
+    );
   }
 
   /**
@@ -728,8 +833,13 @@ export default class ApplicationRendering extends GlimmerComponent<Args> {
   highlightTrace(trace: Trace, traceStep: string) {
     // Open components such that complete trace is visible
     this.openAllComponents();
-    highlightTrace(trace, traceStep, this.applicationObject3D,
-      this.drawableClassCommunications, this.args.landscapeData.structureLandscapeData);
+    highlightTrace(
+      trace,
+      traceStep,
+      this.applicationObject3D,
+      this.drawableClassCommunications,
+      this.args.landscapeData.structureLandscapeData
+    );
   }
 
   @action
@@ -744,7 +854,9 @@ export default class ApplicationRendering extends GlimmerComponent<Args> {
         object3D.updateColor();
         // Special case because communication arrow is no base mesh
       } else if (object3D instanceof CommunicationArrowMesh) {
-        object3D.updateColor(this.configuration.applicationColors.communicationArrow);
+        object3D.updateColor(
+          this.configuration.applicationColors.communicationArrow
+        );
       }
     });
   }
