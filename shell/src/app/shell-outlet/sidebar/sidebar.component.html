@@ -21,48 +21,45 @@
   </div>
 
   <ng-container *ngIf="showColorPicker">
-    <div class="c-color-picker">
+    <div class="c-card-container">
       <div class="card mt-3 border-radius-0">
         <div class="card-body d-flex flex-column">
           <h5 class="text-center">Color Picker</h5>
           <!-- TODO: find workaround for settings app -->
           <!-- <app-settings></app-settings> -->
-          <button class="btn btn-outline-info"
+          <span class="material-icons c-btn-close"
             (click)="showColorPicker = false">
-            Close color picker
-          </button>
+            close
+          </span>
         </div>
       </div>
     </div>
   </ng-container>
 
   <ng-container *ngIf="showTraceOverview">
-    <div class="c-trace-overview">
+    <div class="c-card-container">
       <div class="card mt-3 border-radius-0">
         <div class="card-body d-flex flex-column">
           <h5 class="text-center">Trace Overview</h5>
-
-          <!-- <ng-container #traceContainer></ng-container> -->
-
           <app-trace-overview-host></app-trace-overview-host>
-          <button class="btn btn-outline-info"
+          <span class="material-icons c-btn-close"
             (click)="showTraceOverview = false">
-            Close trace overview
-          </button>
+            close
+          </span>
         </div>
       </div>
     </div>
   </ng-container>
 
   <ng-container *ngIf="showCollaborativeMode">
-    <div class="c-collaborative-mode">
+    <div class="c-card-container">
       <div class="card mt-3 border-radius-0">
         <div class="card-body d-flex flex-column">
           <h5 class="text-center">Collaborative Mode</h5>
-          <button class="btn btn-outline-info"
+          <span class="material-icons c-btn-close"
             (click)="showCollaborativeMode = false">
-            Close Collaborative mode
-          </button>
+            close
+          </span>
         </div>
       </div>
     </div>

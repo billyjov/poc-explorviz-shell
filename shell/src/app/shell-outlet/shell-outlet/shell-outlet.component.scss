@@ -53,7 +53,8 @@
 
 .sidebar-content {
   font-size: 16px;
-  height: 100%;
+  height: calc(100vh - 50px);
+  overflow-y: scroll;
 }
 
 
