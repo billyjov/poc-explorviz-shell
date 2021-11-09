@@ -1,5 +1,5 @@
 import THREE from 'three';
-import { DrawableClassCommunication } from 'explorviz-frontend/utils/landscape-rendering/class-communication-computer';
+import { DrawableClassCommunication } from '../../../utils/landscape-rendering/class-communication-computer';
 import CommunicationLayout from '../../layout-models/communication-layout';
 import BaseMesh from '../base-mesh';
 import CommunicationArrowMesh from './communication-arrow-mesh';
@@ -9,8 +9,12 @@ export default class ClazzCommunicationMesh extends BaseMesh {
 
   layout: CommunicationLayout;
 
-  constructor(layout: CommunicationLayout, dataModel: DrawableClassCommunication,
-    defaultColor: THREE.Color, highlightingColor: THREE.Color) {
+  constructor(
+    layout: CommunicationLayout,
+    dataModel: DrawableClassCommunication,
+    defaultColor: THREE.Color,
+    highlightingColor: THREE.Color
+  ) {
     super(defaultColor, highlightingColor);
     this.layout = layout;
     this.dataModel = dataModel;
@@ -65,12 +69,18 @@ export default class ClazzCommunicationMesh extends BaseMesh {
     const direction = new THREE.Vector3().subVectors(end, start);
     const orientation = new THREE.Matrix4();
     orientation.lookAt(start, end, new THREE.Object3D().up);
-    orientation.multiply(new THREE.Matrix4().set(1, 0, 0, 0, 0, 0, 1,
-      0, 0, -1, 0, 0, 0, 0, 0, 1));
+    orientation.multiply(
+      new THREE.Matrix4().set(1, 0, 0, 0, 0, 0, 1, 0, 0, -1, 0, 0, 0, 0, 0, 1)
+    );
 
     const { lineThickness } = layout;
-    const edgeGeometry = new THREE.CylinderGeometry(lineThickness, lineThickness,
-      direction.length(), 20, 1);
+    const edgeGeometry = new THREE.CylinderGeometry(
+      lineThickness,
+      lineThickness,
+      direction.length(),
+      20,
+      1
+    );
     this.geometry = edgeGeometry;
     this.applyMatrix4(orientation);
 
@@ -85,7 +95,11 @@ export default class ClazzCommunicationMesh extends BaseMesh {
    * @param curveHeight Max height of the communication. Default 0.0
    * @param desiredSegments The number of segments (tubes) the geometry persists of. Default 20
    */
-  render(applicationCenter = new THREE.Vector3(), curveHeight = 0.0, desiredSegments = 20) {
+  render(
+    applicationCenter = new THREE.Vector3(),
+    curveHeight = 0.0,
+    desiredSegments = 20
+  ) {
     const { layout } = this;
 
     const start = new THREE.Vector3();
@@ -101,11 +115,7 @@ export default class ClazzCommunicationMesh extends BaseMesh {
     const middle = start.clone().add(halfVector);
     middle.y += curveHeight;
 
-    const curve = new THREE.QuadraticBezierCurve3(
-      start,
-      middle,
-      end,
-    );
+    const curve = new THREE.QuadraticBezierCurve3(start, middle, end);
 
     let curveSegments = desiredSegments;
     // Render straigt tube if curve height of 0.0 is provided
@@ -113,7 +123,11 @@ export default class ClazzCommunicationMesh extends BaseMesh {
       curveSegments = 1;
     }
 
-    this.geometry = new THREE.TubeGeometry(curve, curveSegments, layout.lineThickness);
+    this.geometry = new THREE.TubeGeometry(
+      curve,
+      curveSegments,
+      layout.lineThickness
+    );
   }
 
   /**
@@ -125,7 +139,12 @@ export default class ClazzCommunicationMesh extends BaseMesh {
    * @param yOffset Units to move the communication arrows up by. Default 1.0
    * @param color The color of the arrows. Default black
    */
-  addArrows(applicationCenter = new THREE.Vector3(), width = 1, yOffset = 1, color = 0x000000) {
+  addArrows(
+    applicationCenter = new THREE.Vector3(),
+    width = 1,
+    yOffset = 1,
+    color = 0x000000
+  ) {
     const { layout } = this;
     // Scale arrow with communication line thickness
     const { startPoint } = layout;
@@ -156,8 +175,13 @@ export default class ClazzCommunicationMesh extends BaseMesh {
    * @param yOffset Units to move the communication arrow up by. Default 1.0
    * @param color The color of the arrow.
    */
-  private addArrow(start: THREE.Vector3, end: THREE.Vector3,
-    width: number, yOffset: number, color: number) {
+  private addArrow(
+    start: THREE.Vector3,
+    end: THREE.Vector3,
+    width: number,
+    yOffset: number,
+    color: number
+  ) {
     const dir = new THREE.Vector3().subVectors(end, start);
     const len = dir.length();
     // Do not draw precisely in the middle to leave a
@@ -174,8 +198,15 @@ export default class ClazzCommunicationMesh extends BaseMesh {
     const headLength = Math.min(2 * headWidth, 0.3 * len);
     const length = headLength + 0.00001; // body of arrow not visible
 
-    const arrow = new CommunicationArrowMesh(this.dataModel, dir, origin, length,
-      color, headLength, headWidth);
+    const arrow = new CommunicationArrowMesh(
+      this.dataModel,
+      dir,
+      origin,
+      length,
+      color,
+      headLength,
+      headWidth
+    );
     this.add(arrow);
   }
 }

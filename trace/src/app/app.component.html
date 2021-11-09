@@ -11,17 +11,22 @@
         </th>
         <th scope="col" sortable="population" (sort)="onSort($event)">
           Duration in
+          <button (click)="toggleTraceTimeUnit()"
+            class="btn btn-outline-secondary">
+            {{ traceTimeUnit }}
+          </button>
         </th>
       </tr>
     </thead>
     <tbody>
-      <ng-container *ngFor="let trace of landscapeData.dynamicLandscapeData">
+      <ng-container
+        *ngFor="let trace of landscapeData.dynamicLandscapeData; let i = index">
         <tr (click)="selectTrace(trace)"
           [hidden]="selectedTrace && selectedTrace.traceId !== trace.traceId">
           <th scope="row">{{ trace.traceId }}</th>
           <td>{{ getFirstClass(trace.traceId)?.name }}</td>
           <td>{{ getLastClass(trace.traceId)?.name }}</td>
-          <td>-</td>
+          <td>{{ getDuration(i) }}</td>
         </tr>
       </ng-container>
     </tbody>

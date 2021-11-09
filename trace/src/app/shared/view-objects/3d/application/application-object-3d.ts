@@ -1,8 +1,7 @@
 import THREE from 'three';
-import { Application } from 'explorviz-frontend/utils/landscape-schemes/structure-data';
-import { Trace } from 'explorviz-frontend/utils/landscape-schemes/dynamic-data';
-import BoxLayout from 'explorviz-frontend/view-objects/layout-models/box-layout';
-import { tracked } from '@glimmer/tracking';
+import { Application } from '../../../utils/landscape-schemes/structure-data';
+import { Trace } from '../../../utils/landscape-schemes/dynamic-data';
+import BoxLayout from '../../layout-models/box-layout';
 import FoundationMesh from './foundation-mesh';
 import ClazzMesh from './clazz-mesh';
 import ComponentMesh from './component-mesh';
@@ -40,7 +39,6 @@ export default class ApplicationObject3D extends THREE.Object3D {
    */
   componentMeshes: Set<ComponentMesh> = new Set();
 
-  @tracked
   highlightedEntity: BaseMesh | Trace | null = null;
 
   constructor(application: Application, boxLayoutMap: Map<string, BoxLayout>, traces: Trace[]) {

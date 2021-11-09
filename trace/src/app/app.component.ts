@@ -8,6 +8,7 @@ import {
   QueryList,
   ViewChildren,
 } from '@angular/core';
+import { formatNumber } from './shared/helpers/format-number';
 import { getValueOfMap } from './shared/helpers/get-value-of-map';
 import {
   DynamicLandscapeData,
@@ -16,7 +17,12 @@ import {
 import { Trace } from './shared/utils/landscape-schemes/dynamic-data';
 import { Class } from './shared/utils/landscape-schemes/structure-data';
 import { getHashCodeToClassMap } from './shared/utils/landscape-structure-helpers';
-import { getSortedTraceSpans } from './shared/utils/trace-helpers';
+import {
+  calculateDuration,
+  getSortedTraceSpans,
+  sortTracesByDuration,
+  sortTracesById,
+} from './shared/utils/trace-helpers';
 
 interface Country {
   id: number;
@@ -61,6 +67,8 @@ export class NgbdSortableHeader {
   }
 }
 
+export type TimeUnit = 'ns' | 'ms' | 's';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -77,23 +85,34 @@ export class AppComponent implements OnInit {
   public filteredTraces: DynamicLandscapeData;
   public isShellPresent: boolean = false;
   public selectedTrace: Trace | null = null;
+  public traceTimeUnit: TimeUnit = 'ms';
   public sortBy: string = 'traceId';
+  isSortedAsc: boolean = true;
+
+  filterTerm: string = '';
 
   @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>;
 
   ngOnInit() {}
 
+  get traces() {
+    return this.filterAndSortTraces();
+  }
+
+  get traceDurations() {
+    return this.traces.map((trace) => calculateDuration(trace));
+  }
+
   public selectTrace(trace: Trace): void {
     // Reset highlighting when highlighted trace is clicked again
     if (trace === this.selectedTrace) {
       this.selectedTrace = null;
-      // this.args.removeHighlighting();
+      this.removeHighlighting();
       return;
     }
 
     this.selectedTrace = trace;
   }
-
 
   public getFirstClass(id: string) {
     return getValueOfMap([this.firstClasses, id]);
@@ -101,6 +120,10 @@ export class AppComponent implements OnInit {
 
   public getLastClass(id: string) {
     return getValueOfMap([this.lastClasses, id]);
+  }
+
+  public getDuration(index: number) {
+    return formatNumber([this.traceDurations[index], this.traceTimeUnit]);
   }
 
   private get firstClasses() {
@@ -159,6 +182,100 @@ export class AppComponent implements OnInit {
         (span) => hashCodeToClassMap.get(span.hashCode) !== undefined
       )
     );
+  }
+
+  toggleTraceTimeUnit() {
+    const timeUnit = this.traceTimeUnit;
+
+    if (timeUnit === 'ns') {
+      this.traceTimeUnit = 'ms';
+    } else if (timeUnit === 'ms') {
+      this.traceTimeUnit = 's';
+    } else if (timeUnit === 's') {
+      this.traceTimeUnit = 'ns';
+    }
+  }
+
+  filterAndSortTraces() {
+    if (this.selectedTrace) {
+      return [this.selectedTrace];
+    }
+
+    const filteredTraces: Trace[] = [];
+    const filter = this.filterTerm;
+    this.applicationTraces.forEach((trace) => {
+      if (filter === '' || trace.traceId.toLowerCase().includes(filter)) {
+        filteredTraces.push(trace);
+        return;
+      }
+
+      const firstClass = this.firstClasses.get(trace.traceId);
+      const lastClass = this.lastClasses.get(trace.traceId);
+
+      if (
+        (firstClass && firstClass.name.toLowerCase().includes(filter)) ||
+        (lastClass && lastClass.name.toLowerCase().includes(filter))
+      ) {
+        filteredTraces.push(trace);
+      }
+    });
+
+    if (this.sortBy === 'traceId') {
+      sortTracesById(filteredTraces, this.isSortedAsc);
+    }
+    if (this.sortBy === 'firstClassName') {
+      this.sortTracesByfirstClassName(filteredTraces, this.isSortedAsc);
+    }
+    if (this.sortBy === 'lastClassName') {
+      this.sortTracesBylastClassName(filteredTraces, this.isSortedAsc);
+    }
+    if (this.sortBy === 'traceDuration') {
+      sortTracesByDuration(filteredTraces, this.isSortedAsc);
+    }
+
+    return filteredTraces;
+  }
+
+  sortTracesByfirstClassName(traces: Trace[], ascending = true) {
+    traces.sort((a, b) => {
+      const firstClassA = this.firstClasses.get(a.traceId)!;
+      const firstClassB = this.firstClasses.get(b.traceId)!;
+
+      if (firstClassA.name > firstClassB.name) {
+        return 1;
+      }
+      if (firstClassB.name > firstClassA.name) {
+        return -1;
+      }
+      return 0;
+    });
+
+    if (!ascending) {
+      traces.reverse();
+    }
+  }
+
+  sortTracesBylastClassName(traces: Trace[], ascending = true) {
+    traces.sort((a, b) => {
+      const lastClassA = this.lastClasses.get(a.traceId)!;
+      const lastClassB = this.lastClasses.get(b.traceId)!;
+
+      if (lastClassA.name > lastClassB.name) {
+        return 1;
+      }
+      if (lastClassB.name > lastClassA.name) {
+        return -1;
+      }
+      return 0;
+    });
+
+    if (!ascending) {
+      traces.reverse();
+    }
+  }
+
+  private removeHighlighting(): void {
+    window.dispatchEvent(new CustomEvent('trace:remove-highlighting'));
   }
 
   onSort({ column, direction }: SortEvent) {

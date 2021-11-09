@@ -196,6 +196,9 @@ export default class ApplicationRendering extends GlimmerComponent<Args> {
         }
       }
     );
+    fromEvent(window, 'trace:remove-highlighting').subscribe(() =>
+      this.removeHighlighting()
+    );
   }
 
   @action
