@@ -7,11 +7,13 @@
           Color Picker
         </div>
       </li>
-      <li class="nav-item" (click)="showTraceOverview = true">
-        <div class="nav-link-with-cursor" title="Show Traces">
-          Trace Overview
-        </div>
-      </li>
+      <ng-container *ngIf="hasTraceOverview()">
+        <li class="nav-item" (click)="showTraceOverview = true">
+          <div class="nav-link-with-cursor" title="Show Traces">
+            Trace Overview
+          </div>
+        </li>
+      </ng-container>
       <li class="nav-item" (click)="showCollaborativeMode = true">
         <div class="nav-link-with-cursor" title="Collaborative Settings">
           Collaborative Mode

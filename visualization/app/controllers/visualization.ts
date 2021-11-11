@@ -228,19 +228,24 @@ export default class VisualizationController extends Controller {
 
   @action
   openDataSelection() {
-    window.dispatchEvent(
-      new CustomEvent('visualization:open-sidebar', {
-        detail: {
-          landscapeData: this.landscapeData,
-          applicationTraces:this.applicationTraces
-        },
-      })
-    );
+    if (!!this.landscapeData?.application) {
+      window.dispatchEvent(
+        new CustomEvent('visualization:open-sidebar', {
+          detail: {
+            landscapeData: this.landscapeData,
+            applicationTraces: this.applicationTraces,
+          },
+        })
+      );
+    } else {
+      window.dispatchEvent(new CustomEvent('visualization:open-sidebar'));
+    }
   }
 
   get applicationTraces() {
+    console.log('ohhh noon tu es ici');
     const hashCodeToClassMap = getHashCodeToClassMap(
-      this.landscapeData?.application as (StructureLandscapeData | Application)
+      this.landscapeData?.application as StructureLandscapeData | Application
     );
 
     return this.landscapeData?.dynamicLandscapeData.filter((trace) =>

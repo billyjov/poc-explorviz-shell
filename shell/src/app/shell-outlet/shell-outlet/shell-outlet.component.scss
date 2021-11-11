@@ -30,7 +30,6 @@
   right: 0;
   bottom: 160px;
   z-index: 1;
-  background-color: white;
   transform: translateX(100%);
   transition: ease-in-out 300ms transform;
   width: auto;
@@ -44,8 +43,8 @@
 
 .sidebar-close {
   position: absolute;
-  top: 23px;
-  left: 20px;
+  top: 8px;
+  left: -30px;
   cursor: pointer;
   transform: rotate(-90deg);
   padding: 0;
