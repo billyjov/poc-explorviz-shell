@@ -8,25 +8,25 @@
       </tr>
       <tr class="d-flex">
         <th class="col-3">Soure Clazz</th>
-        <td class="col-9 container-word-wrap">
+        <td class="col-9 container-word-wrap d-flex align-items-center">
           <ng-container *ngIf="sourceClass">
             {{ sourceClass.name }}
-            <!-- <BsButton @onClick={{fn @moveCameraTo @sourceClass}} @type="button"
-              class="th-btn">
-              {{svg-jar "eye-16" class="octicon align-middle"}}
-            </BsButton> -->
+            <span class="material-icons d-inline-block pointer-cursor ml-3"
+              (click)="moveCameraTo(sourceClass)">
+              visibility
+            </span>
           </ng-container>
         </td>
       </tr>
       <tr class="d-flex">
         <th class="col-3">Target Clazz</th>
-        <td class="col-9 container-word-wrap">
+        <td class="col-9 container-word-wrap d-flex align-items-center">
           <ng-container *ngIf="targetClass">
             {{ targetClass.name }}
-            <!-- <BsButton @onClick={{fn @moveCameraTo @targetClass}} @type="button"
-              class="th-btn">
-              {{svg-jar "eye-16" class="octicon align-middle"}}
-            </BsButton> -->
+            <span class="material-icons d-inline-block pointer-cursor ml-3"
+              (click)="moveCameraTo(targetClass)">
+              visibility
+            </span>
           </ng-container>
         </td>
       </tr>

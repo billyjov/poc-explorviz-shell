@@ -5,11 +5,11 @@
  */
 export function formatNumber([inputNumber, unit]: [number, string]) {
   if (unit === 'ms') {
-    return (inputNumber / 1000000.0).toFixed(4).toString();
+    return (inputNumber / 1000000.0)?.toFixed(4).toString();
   }
   if (unit === 's') {
-    return (inputNumber / 1000000000.0).toFixed(4).toString();
+    return (inputNumber / 1000000000.0)?.toFixed(4).toString();
   }
   // default time unit is `nanoseconds` (ns) as defined in backend
-  return inputNumber.toFixed(2).toString();
+  return inputNumber?.toFixed(2).toString();
 }

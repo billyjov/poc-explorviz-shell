@@ -10,7 +10,14 @@ import { TraceNavigationComponent } from './trace-navigation/trace-navigation.co
 import { TraceStepsDetailsComponent } from './trace-steps-details/trace-steps-details.component';
 
 @NgModule({
-  declarations: [AppComponent, NbgdSortableHeaderDirective, NgbdSortableHeader, TraceReplayerMainComponent, TraceNavigationComponent, TraceStepsDetailsComponent],
+  declarations: [
+    AppComponent,
+    NbgdSortableHeaderDirective,
+    NgbdSortableHeader,
+    TraceReplayerMainComponent,
+    TraceNavigationComponent,
+    TraceStepsDetailsComponent,
+  ],
   imports: [BrowserModule, NgbModule],
   providers: [],
   bootstrap: [AppComponent],

@@ -5129,10 +5129,10 @@ map-visit@^1.0.0:
   dependencies:
     object-visit "^1.0.0"
 
-material-icons@^1.10.1:
-  version "1.10.1"
-  resolved "https://registry.yarnpkg.com/material-icons/-/material-icons-1.10.1.tgz#6b22f706e961abcb9b32b7970919d5f3567d080a"
-  integrity sha512-1DRuTO/ijtDcnyfSk8n172DFeMq+4U/VlXoKS2zJGossGIvAKe8ryBXh2c6/lEiX6XO9LJF/ZeN347UIiaSNUA==
+material-icons@^1.10.2:
+  version "1.10.2"
+  resolved "https://registry.yarnpkg.com/material-icons/-/material-icons-1.10.2.tgz#7467350db65e14f3bd9331fe75ea57fce5d1b239"
+  integrity sha512-JCnFL3NvfFzIvX/ub8HW+f1Ij1JxhdE6kCHOnladuSoHSP9ue6vqvxQLyiA2uNgWp4BMTv86OWsZPerY2qKYbw==
 
 mdn-data@2.0.14:
   version "2.0.14"
