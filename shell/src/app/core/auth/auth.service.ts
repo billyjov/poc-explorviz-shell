@@ -88,7 +88,6 @@ export class AuthService {
           async (err, authResult: AuthResult | undefined) => {
             if (err || authResult === undefined) {
               // TODO: check correct method
-              console.log('hello here ');
 
               sessionStorage.removeItem('user');
               sessionStorage.removeItem('accessToken');

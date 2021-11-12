@@ -243,7 +243,6 @@ export default class VisualizationController extends Controller {
   }
 
   get applicationTraces() {
-    console.log('ohhh noon tu es ici');
     const hashCodeToClassMap = getHashCodeToClassMap(
       this.landscapeData?.application as StructureLandscapeData | Application
     );

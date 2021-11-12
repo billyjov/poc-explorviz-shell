@@ -38,7 +38,6 @@ export class TraceOverviewHostComponent implements OnInit, OnDestroy {
     componentRef.instance.trace = '';
     this.subscriptions.add(
       this.evtBridgeService.landscapeDataSubject.subscribe((val) => {
-        console.log('value inside event bridge: ', val);
         (componentRef.instance as any).landscapeData = val.landscapeData;
         (componentRef.instance as any).isShellPresent = true;
       })

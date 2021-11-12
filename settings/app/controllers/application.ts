@@ -10,11 +10,8 @@ import { action } from '@ember/object';
  * @submodule page
  */
 export default class ApplicationController extends Controller {
-
   @action
-  public updateColors(): void {
-    console.log('hello')
-  }
+  public updateColors(): void {}
 }
 
 // DO NOT DELETE: this is how TypeScript knows how to look up your controllers.

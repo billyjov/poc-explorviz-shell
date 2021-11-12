@@ -80,7 +80,6 @@ export default class VisualizationRoute extends Route {
       AlertifyHandler.showAlertifyWarning(error.description);
     }
     if (error.statusCode !== 429) {
-      console.log('should log out from visualization');
       // TODO: event for logout & handle standalone mode
       this.auth.logout();
     }

@@ -322,7 +322,6 @@ export default class LandscapeRendering extends GlimmerComponent<Args> {
       this.scene.add(sphere);
       spheres.push(sphere);
     }
-    console.log('spheres: ', )
     return spheres;
   }
 

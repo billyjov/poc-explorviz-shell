@@ -28,7 +28,6 @@ export default class Landscapes extends Controller {
 
   @action
   openTokenCreationModal() {
-    console.log('open token creation modal');
     this.tokenCreationModalIsOpen = true;
     this.tokenAlias = '';
   }
@@ -79,11 +78,6 @@ export default class Landscapes extends Controller {
   }
 
   sendTokenCreateRequest(alias = '') {
-    // let uId = this.auth.user?.sub;
-    console.log(
-      'user inside landscape controller value: ',
-      JSON.parse(JSON.stringify(sessionStorage.getItem('user'))) as any
-    );
     let uId = JSON.parse(sessionStorage.getItem('user') as string).sub;
 
     if (!uId) {

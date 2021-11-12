@@ -51,9 +51,6 @@ export default class ColorPicker extends Component<Args> {
       ).on('colorpickerChange', (e: any) => {
         const inputColor = e.color.toHexString();
         configColor.set(inputColor);
-
-        // this.args.updateView();
-        console.log('color selected: ', inputColor, ' for element ID: ', element.id);
       });
   }
 }
