@@ -1,7 +1,10 @@
 import Application from '@ember/application';
 import Resolver from 'ember-resolver';
 import loadInitializers from 'ember-load-initializers';
-import { customElement } from 'ember-custom-elements';
+
+// NOTE: this app use a patch version of ember-custom-elements to deal with external dependencies
+// of this app.
+import { customElement } from 'ember-custom-elements-patch';
 
 import config from 'visualization/config/environment';
 
