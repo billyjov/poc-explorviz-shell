@@ -110,8 +110,7 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": [],
-            "extraWebpackConfig": "webpack.config.js"
+            "scripts": []
           }
         }
       }

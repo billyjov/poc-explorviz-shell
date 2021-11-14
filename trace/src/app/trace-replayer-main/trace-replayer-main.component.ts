@@ -27,7 +27,7 @@ export class TraceReplayerMainComponent implements OnInit {
       const [firstStep] = this.traceSteps;
       this.currentTraceStep = firstStep;
 
-      this.highlightTrace(this.selectedTrace, firstStep.spanId);
+      this.highlightTrace(this.selectedTrace, firstStep?.spanId);
 
       if (this.isReplayAnimated) {
         this.moveCameraTo(this.currentTraceStep);
@@ -65,7 +65,7 @@ export class TraceReplayerMainComponent implements OnInit {
       return spanIdToClass(
         this.structureData,
         selectedTrace,
-        currentTraceStep.spanId
+        currentTraceStep?.spanId
       );
     }
     return undefined;
@@ -112,7 +112,7 @@ export class TraceReplayerMainComponent implements OnInit {
 
     this.currentTraceStep = this.traceSteps[nextStepPosition];
 
-    this.highlightTrace(this.selectedTrace, this.currentTraceStep.spanId);
+    this.highlightTrace(this.selectedTrace, this.currentTraceStep?.spanId);
 
     if (this.isReplayAnimated) {
       this.moveCameraTo(this.currentTraceStep);

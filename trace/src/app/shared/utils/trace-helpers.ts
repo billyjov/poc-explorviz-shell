@@ -92,26 +92,26 @@ export function sortSpanArrayByTime(spanArary: Span[], copy = false) {
  * which maps all spans' ids to their corresponding child spans
  */
 export function getTraceIdToSpanTree(trace: Trace) {
-  let firstSpan: Span = trace.spanList[0];
+  let firstSpan: Span = trace?.spanList[0];
 
   // Put spans into map for more efficient lookup when sorting
   const spanIdToSpanMap = new Map<string, Span>();
-  trace.spanList.forEach((span) => {
-    if (span.parentSpanId === '') {
+  trace?.spanList.forEach((span) => {
+    if (span?.parentSpanId === '') {
       firstSpan = span;
     } else {
-      spanIdToSpanMap.set(span.spanId, span);
+      spanIdToSpanMap.set(span?.spanId, span);
     }
   });
 
   const parentSpanIdToChildSpansMap = new Map<string, Span[]>();
 
-  trace.spanList.forEach((span) => {
-    parentSpanIdToChildSpansMap.set(span.spanId, []);
+  trace?.spanList.forEach((span) => {
+    parentSpanIdToChildSpansMap.set(span?.spanId, []);
   });
 
-  trace.spanList.forEach((span) => {
-    parentSpanIdToChildSpansMap.get(span.parentSpanId)?.push(span);
+  trace?.spanList.forEach((span) => {
+    parentSpanIdToChildSpansMap.get(span?.parentSpanId)?.push(span);
   });
 
   parentSpanIdToChildSpansMap.forEach((spanArary) => sortSpanArrayByTime(spanArary));
@@ -128,7 +128,7 @@ export function getTraceIdToSpanTreeMap(traces: Trace[]) {
   const traceIdToSpanTree = new Map<string, SpanTree>();
 
   traces.forEach((trace) => {
-    traceIdToSpanTree.set(trace.traceId, getTraceIdToSpanTree(trace));
+    traceIdToSpanTree?.set(trace.traceId, getTraceIdToSpanTree(trace));
   });
 
   return traceIdToSpanTree;
@@ -140,7 +140,7 @@ export function getTraceIdToSpanTreeMap(traces: Trace[]) {
  */
 export function getSortedTraceSpans(trace: Trace) {
   function getSortedSpanList(span: Span, tree: Map<string, Span[]>): Span[] {
-    const childSpans = tree.get(span.spanId);
+    const childSpans = tree.get(span?.spanId);
 
     if (childSpans === undefined || childSpans.length === 0) {
       return [span];
