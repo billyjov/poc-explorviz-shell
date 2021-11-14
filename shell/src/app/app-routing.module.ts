@@ -8,19 +8,6 @@ import { VisualizationComponent } from './visualization/visualization.component'
 
 const routes: Routes = [
   {
-    path: 'list',
-    component: ShellOutletComponent,
-    canActivate: [AuthGuard],
-    children: [
-      {
-        path: '',
-        loadChildren: () =>
-          import('./list/list.module').then((m) => m.ListModule),
-        canActivate: [AuthGuard],
-      },
-    ],
-  },
-  {
     path: 'landscapes',
     component: ShellOutletComponent,
     canActivate: [AuthGuard],
