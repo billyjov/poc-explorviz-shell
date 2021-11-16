@@ -1,4 +1,10 @@
 <div [ngClass]="{'p-5': !isShellPresent}">
+  <form>
+    <div class="form-group form-inline">
+      <input class="form-control ml-auto" type="text" placeholder="Filter traces"
+        [formControl]="filter" />
+    </div>
+  </form>
   <table class="table table-striped">
     <thead>
       <tr>
@@ -20,8 +26,7 @@
       </tr>
     </thead>
     <tbody>
-      <ng-container
-        *ngFor="let trace of filteredTraces; let i = index">
+      <ng-container *ngFor="let trace of filteredTraces; let i = index">
         <tr (click)="selectTrace(trace)"
           [hidden]="selectedTrace && selectedTrace.traceId !== trace.traceId">
           <th scope="row">{{ trace.traceId }}</th>

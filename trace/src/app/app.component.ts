@@ -3,11 +3,17 @@ import {
   Directive,
   EventEmitter,
   Input,
+  OnDestroy,
   OnInit,
   Output,
   QueryList,
   ViewChildren,
 } from '@angular/core';
+import { FormControl } from '@angular/forms';
+
+import { Subscription } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
+
 import { formatNumber } from './shared/helpers/format-number';
 import { getValueOfMap } from './shared/helpers/get-value-of-map';
 import {
@@ -70,7 +76,7 @@ export type TimeUnit = 'ns' | 'ms' | 's';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   /**
    * Provided by Shell app.
    *
@@ -83,14 +89,34 @@ export class AppComponent implements OnInit {
   public selectedTrace: Trace | null = null;
   public traceTimeUnit: TimeUnit = 'ms';
   public sortBy: string = 'traceId';
+  public filter = new FormControl('');
   isSortedAsc: boolean = true;
 
   filterTerm: string = '';
+
+  private subscriptions = new Subscription();
 
   @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>;
 
   ngOnInit() {
     this.filteredTraces = this.landscapeData.dynamicLandscapeData;
+
+    this.subscriptions.add(
+      this.filter.valueChanges
+        .pipe(
+          startWith(''),
+          map((text) => {
+            this.filterTerm = text;
+            this.filteredTraces = this.filterAndSortTraces();
+            return text;
+          })
+        )
+        .subscribe()
+    );
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
   }
 
   get traces() {
