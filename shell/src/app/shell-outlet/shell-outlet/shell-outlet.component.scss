@@ -79,3 +79,19 @@
 .btn-close:hover {
   background-color: #6c757d !important;
 }
+
+.c-app-alias {
+  margin: 0 auto;
+  position: absolute;
+  left: 0;
+  right: 0;
+  width: max-content;
+  cursor: pointer;
+  color: #007bff;
+  display: flex;
+  align-items: center;
+}
+
+.c-app-alias--name:hover {
+  text-decoration: underline;
+}

@@ -1,11 +1,16 @@
-<nav class="navbar navbar-expand-lg navbar-light">
+<nav class="navbar navbar-expand-lg navbar-light position-relative">
   <a class="navbar-brand" href>
     <img src="/assets/img/explorviz-30px.png" class="c-logo" alt="ExplorViz"
       draggable="false">
   </a>
 
   <ng-container *ngIf="isVisualizationRoute()">
-    <a (click)="navigateToRoute('/landscapes')">{{ appAlias }}</a>
+    <div class="c-app-alias" (click)="navigateToRoute('/landscapes')">
+      <span class="material-icons d-inline-block mr-2">
+        key
+      </span>
+      <span class="c-app-alias--name">{{ appAlias }}</span>
+    </div>
   </ng-container>
 
   <button class="navbar-toggler" type="button" data-toggle="collapse"
