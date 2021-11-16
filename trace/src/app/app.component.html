@@ -2,14 +2,14 @@
   <table class="table table-striped">
     <thead>
       <tr>
-        <th scope="col">Trace ID</th>
-        <th scope="col" sortable="name" (sort)="onSort($event)">
+        <th scope="col" sortable="traceId" (sort)="onSort($event)">Trace ID</th>
+        <th scope="col" sortable="firstClazz" (sort)="onSort($event)">
           First Clazz
         </th>
-        <th scope="col" sortable="area" (sort)="onSort($event)">
+        <th scope="col" sortable="lastClazz" (sort)="onSort($event)">
           Last Clazz
         </th>
-        <th scope="col" sortable="population" (sort)="onSort($event)">
+        <th scope="col" sortable="duration" (sort)="onSort($event)">
           Duration in
           <br>
           <button (click)="toggleTraceTimeUnit()"
@@ -21,7 +21,7 @@
     </thead>
     <tbody>
       <ng-container
-        *ngFor="let trace of landscapeData.dynamicLandscapeData; let i = index">
+        *ngFor="let trace of filteredTraces; let i = index">
         <tr (click)="selectTrace(trace)"
           [hidden]="selectedTrace && selectedTrace.traceId !== trace.traceId">
           <th scope="row">{{ trace.traceId }}</th>

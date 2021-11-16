@@ -24,24 +24,20 @@ import {
   sortTracesById,
 } from './shared/utils/trace-helpers';
 
-interface Country {
-  id: number;
-  name: string;
-  flag: string;
-  area: number;
-  population: number;
+interface Column {
+  traceId: string;
+  firstClazz: string;
+  lastClazz: string;
+  duration: TimeUnit;
 }
 
-export type SortColumn = keyof Country | '';
+export type SortColumn = keyof Column | '';
 export type SortDirection = 'asc' | 'desc' | '';
 const rotate: { [key: string]: SortDirection } = {
   asc: 'desc',
   desc: '',
   '': 'asc',
 };
-
-const compare = (v1: string | number, v2: string | number) =>
-  v1 < v2 ? -1 : v1 > v2 ? 1 : 0;
 
 export interface SortEvent {
   column: SortColumn;
@@ -93,7 +89,9 @@ export class AppComponent implements OnInit {
 
   @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>;
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.filteredTraces = this.landscapeData.dynamicLandscapeData;
+  }
 
   get traces() {
     return this.filterAndSortTraces();
@@ -224,10 +222,10 @@ export class AppComponent implements OnInit {
       sortTracesById(filteredTraces, this.isSortedAsc);
     }
     if (this.sortBy === 'firstClassName') {
-      this.sortTracesByfirstClassName(filteredTraces, this.isSortedAsc);
+      this.sortTracesByFirstClassName(filteredTraces, this.isSortedAsc);
     }
     if (this.sortBy === 'lastClassName') {
-      this.sortTracesBylastClassName(filteredTraces, this.isSortedAsc);
+      this.sortTracesByLastClassName(filteredTraces, this.isSortedAsc);
     }
     if (this.sortBy === 'traceDuration') {
       sortTracesByDuration(filteredTraces, this.isSortedAsc);
@@ -236,7 +234,7 @@ export class AppComponent implements OnInit {
     return filteredTraces;
   }
 
-  sortTracesByfirstClassName(traces: Trace[], ascending = true) {
+  sortTracesByFirstClassName(traces: Trace[], ascending = true) {
     traces.sort((a, b) => {
       const firstClassA = this.firstClasses.get(a.traceId)!;
       const firstClassB = this.firstClasses.get(b.traceId)!;
@@ -255,7 +253,7 @@ export class AppComponent implements OnInit {
     }
   }
 
-  sortTracesBylastClassName(traces: Trace[], ascending = true) {
+  sortTracesByLastClassName(traces: Trace[], ascending = true) {
     traces.sort((a, b) => {
       const lastClassA = this.lastClasses.get(a.traceId)!;
       const lastClassB = this.lastClasses.get(b.traceId)!;
@@ -288,14 +286,12 @@ export class AppComponent implements OnInit {
 
     // sorting traces
     if (direction === '' || column === '') {
-      this.filteredTraces = this.landscapeData.dynamicLandscapeData;
+      this.filteredTraces = this.filterAndSortTraces();
     } else {
-      this.filteredTraces = [...this.landscapeData.dynamicLandscapeData].sort(
-        (a, b) => {
-          const res = compare(a[column], b[column]);
-          return direction === 'asc' ? res : -res;
-        }
-      );
+      direction === 'asc'
+        ? (this.isSortedAsc = true)
+        : (this.isSortedAsc = false);
+      this.filteredTraces = this.filterAndSortTraces();
     }
   }
 }
