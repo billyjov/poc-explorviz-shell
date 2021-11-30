@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 
+import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
+
 import { ShellOutletComponent } from './shell-outlet.component';
 
 describe('ShellOutletComponent', () => {
@@ -10,7 +12,7 @@ describe('ShellOutletComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ShellOutletComponent],
-      imports: [RouterTestingModule],
+      imports: [RouterTestingModule, NgbCollapseModule],
     }).compileComponents();
   });
 

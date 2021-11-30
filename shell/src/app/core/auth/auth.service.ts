@@ -42,7 +42,6 @@ export class AuthService {
       await this.setUser(authResult.accessToken);
       // TODO: ask for access token
       sessionStorage.setItem('accessToken', authResult.accessToken);
-      // this.router.navigate(['/']); // go to the home route
       // ...finish implementing authenticated
     });
     this.lock.on('authorization_error', (error) => {

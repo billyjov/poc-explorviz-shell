@@ -1,5 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
+import {
+  LazyElementDirective,
+  LazyElementsModule,
+} from '@angular-extensions/elements';
+
 import { LandscapesComponent } from './landscapes.component';
 
 describe('LandscapesComponent', () => {
@@ -8,9 +13,9 @@ describe('LandscapesComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ LandscapesComponent ]
-    })
-    .compileComponents();
+      declarations: [LandscapesComponent],
+      imports: [LazyElementsModule],
+    }).compileComponents();
   });
 
   beforeEach(() => {
