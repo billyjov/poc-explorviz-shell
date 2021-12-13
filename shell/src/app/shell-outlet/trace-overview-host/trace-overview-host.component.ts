@@ -21,7 +21,7 @@ export class TraceOverviewHostComponent implements OnInit, OnDestroy {
 
   constructor(
     private cfr: ComponentFactoryResolver,
-    private vCref: ViewContainerRef,
+    private vCRef: ViewContainerRef,
     private evtBridgeService: EventBridgeService
   ) {}
 
@@ -32,12 +32,13 @@ export class TraceOverviewHostComponent implements OnInit, OnDestroy {
       exposedModule: './Component',
     });
     const componentRef: ComponentRef<{ trace: string }> =
-      this.vCref.createComponent(
+      this.vCRef.createComponent(
         this.cfr.resolveComponentFactory(AppComponent)
       );
     componentRef.instance.trace = '';
     this.subscriptions.add(
       this.evtBridgeService.landscapeDataSubject.subscribe((val) => {
+        console.log(val.landscapeData);
         (componentRef.instance as any).landscapeData = val.landscapeData;
         (componentRef.instance as any).isShellPresent = true;
       })

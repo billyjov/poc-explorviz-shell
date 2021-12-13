@@ -1,0 +1,147 @@
+{
+  "application": {
+    "id": "Alexanders-MBP.fritz.box#192.168.178.74#1",
+    "instanceId": "1",
+    "language": "java",
+    "name": "fibonacci",
+    "packages": [
+      {
+        "classes": [],
+        "id": "Alexanders-MBP.fritz.box#192.168.178.74#1.net",
+        "name": "net",
+        "subPackages": [
+          {
+            "classes": [],
+            "id": "Alexanders-MBP.fritz.box#192.168.178.74#1.net.explorviz",
+            "name": "explorviz",
+            "parent": {
+              "classes": [],
+              "id": "Alexanders-MBP.fritz.box#192.168.178.74#1.net",
+              "name": "net",
+              "subPackages": [
+                {
+                  "classes": [],
+                  "id": "Alexanders-MBP.fritz.box#192.168.178.74#1.net.explorviz",
+                  "name": "explorviz",
+                  "parent": {}
+                }
+              ]
+            },
+            "subPackages": [
+
+            ]
+          }
+        ]
+      }
+    ],
+    "parent": {
+      "hostName": "Alexanders-MBP.fritz.box",
+      "id": "Alexanders-MBP.fritz.box#192.168.178.74",
+      "ipAddress": "192.168.178.74",
+      "applications": [
+        {
+          "id": "Alexanders-MBP.fritz.box#192.168.178.74#1",
+          "instanceId": "1",
+          "language": "java",
+          "name": "fibonacci",
+          "packages": [
+            {
+              "classes": [],
+              "id": "Alexanders-MBP.fritz.box#192.168.178.74#1.net",
+              "name": "net",
+              "subPackages": [
+                {
+                  "id": "Alexanders-MBP.fritz.box#192.168.178.74#1.net.explorviz",
+                  "name": "explorviz",
+                  "parent": {
+                    "id": "Alexanders-MBP.fritz.box#192.168.178.74#1.net",
+                    "name": "net",
+                    "subPackages": [],
+                    "classes": []
+                  },
+                  "classes": [],
+                  "subPackages": [
+                    {
+                      "id": "Alexanders-MBP.fritz.box#192.168.178.74#1.net.explorviz.sampleApplication",
+                      "name": "sampleApplication",
+                      "subPackages": [],
+                      "parent": {}
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "dynamicLandscapeData": [
+    {
+      "duration": 0,
+      "endTime": 1620758756535,
+      "landscapeToken": "17844195-6144-4254-a17b-0f7fb49adb0a",
+      "overallRequestCount": 1,
+      "startTime": 1620758756461,
+      "traceCount": 1,
+      "traceId": "28e55ba4ac614a237739533f1d81a6d8",
+      "spanList": [
+        {
+          "endTime": 1620758756462,
+          "hashCode": "add6b7c9487e285cb08bd11208dec851f1e73b6e4a337835b333f29a9b59c407",
+          "landscapeToken": "17844195-6144-4254-a17b-0f7fb49adb0a",
+          "parentSpanId": "880060b9c23b30a2",
+          "spanId": "15208554bb3548ce",
+          "startTime": 1620758756461,
+          "traceId": "28e55ba4ac614a237739533f1d81a6d8"
+        }
+      ]
+    },
+    {
+      "duration": 0,
+      "endTime": 1620758756536,
+      "landscapeToken": "17844195-6144-4254-a17b-0f7fb49adb0a",
+      "overallRequestCount": 1,
+      "startTime": 1620758756536,
+      "traceCount": 1,
+      "traceId": "b5965dbc187d21f3f1a84e39fe701bc3",
+      "spanList": [
+        {
+          "endTime": 1620758756536,
+          "hashCode": "0b064d846e37337db07991f806a36f4fcacab5517d2801918ba6ba65284c9888",
+          "landscapeToken": "17844195-6144-4254-a17b-0f7fb49adb0a",
+          "parentSpanId": "56248da0e2bf9548",
+          "spanId": "178589329cdf5aea",
+          "startTime": 1620758756536,
+          "traceId": "b5965dbc187d21f3f1a84e39fe701bc3"
+        }
+      ]
+    }
+  ],
+  "structureLandscapeData": {
+    "landscapeToken": "17844195-6144-4254-a17b-0f7fb49adb0a",
+    "nodes": [
+      {
+        "applications": [
+          {
+            "id": "Alexanders-MBP.fritz.box#192.168.178.74#1",
+            "instanceId": "1",
+            "language": "java",
+            "name": "fibonacci",
+            "packages": [
+              {
+                "id": "Alexanders-MBP.fritz.box#192.168.178.74#1.net",
+                "name": "net",
+                "subPackages": [],
+                "classes": []
+              }
+            ]
+          }
+        ],
+        "hostName": "Alexanders-MBP.fritz.box",
+        "id": "Alexanders-MBP.fritz.box#192.168.178.74",
+        "ipAddress": "192.168.178.74"
+      }
+    ]
+  }
+}

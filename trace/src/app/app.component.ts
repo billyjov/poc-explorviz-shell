@@ -10,6 +10,7 @@ import {
   ViewChildren,
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 
 import { Subscription } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
@@ -29,6 +30,8 @@ import {
   sortTracesByDuration,
   sortTracesById,
 } from './shared/utils/trace-helpers';
+
+import mockLandscapeData from '../assets/mocks/landscape-data.json';
 
 interface Column {
   traceId: string;
@@ -83,9 +86,9 @@ export class AppComponent implements OnInit, OnDestroy {
    * @type {LandscapeData}
    * @memberof AppComponent
    */
-  public landscapeData: LandscapeData;
   public filteredTraces: DynamicLandscapeData;
   public isShellPresent: boolean = false;
+  public landscapeData: LandscapeData;
   public selectedTrace: Trace | null = null;
   public traceTimeUnit: TimeUnit = 'ms';
   public sortBy: string = 'traceId';
@@ -96,11 +99,28 @@ export class AppComponent implements OnInit, OnDestroy {
 
   private subscriptions = new Subscription();
 
+  constructor(private http: HttpClient) {
+    this.http
+      .get<any>('../assets/mocks/landscape-data.json')
+      .subscribe((val) => {
+        console.log('http: ', val);
+        this.landscapeData = val as unknown as LandscapeData;
+      });
+    if (!this.isShellPresent) {
+      this.landscapeData = mockLandscapeData as unknown as LandscapeData;
+      console.log('this.landscapedata: ', this.landscapeData);
+    }
+  }
+
   @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>;
 
   ngOnInit() {
+    console.log('hallo: ', mockLandscapeData);
+    // Mock data for standalone dev.
+
     this.filteredTraces = this.landscapeData.dynamicLandscapeData;
 
+    console.log('filtered trace: ', this.filteredTraces);
     this.subscriptions.add(
       this.filter.valueChanges
         .pipe(
@@ -298,10 +318,6 @@ export class AppComponent implements OnInit, OnDestroy {
     }
   }
 
-  private removeHighlighting(): void {
-    window.dispatchEvent(new CustomEvent('trace:remove-highlighting'));
-  }
-
   onSort({ column, direction }: SortEvent) {
     // resetting other headers
     this.headers.forEach((header) => {
@@ -319,5 +335,9 @@ export class AppComponent implements OnInit, OnDestroy {
         : (this.isSortedAsc = false);
       this.filteredTraces = this.filterAndSortTraces();
     }
+  }
+
+  private removeHighlighting(): void {
+    window.dispatchEvent(new CustomEvent('trace:remove-highlighting'));
   }
 }
