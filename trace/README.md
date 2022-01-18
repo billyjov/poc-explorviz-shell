@@ -1,4 +1,4 @@
-# Trace
+# Micro-Frontend 'Trace'
 
 
 ### Start app
@@ -9,6 +9,18 @@ npm run start
 
 Browse `http://localhost:4500`
 
+
+### Build 
+
+```bash
+npm run build
+```
+
+### Unit tests
+
+```bash
+npm run test
+```
 
 ### Communication Messages
 

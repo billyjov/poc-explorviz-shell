@@ -1,7 +1,8 @@
-# settings
+# Micro-Frontend 'settings'
 
-This README outlines the details of collaborating on this Ember application.
-A short introduction of this app could easily go here.
+
+**NOTE**: this Micro-Frontend does not work inside the shell
+ because of version conflicts with ember core package
 
 ## Prerequisites
 
