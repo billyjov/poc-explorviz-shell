@@ -1,8 +1,4 @@
-# Visualization Micro-Frontend
-
-
-
-
+# Micro-Frontend 'Visualization'
 
 ## Prerequisites
 
