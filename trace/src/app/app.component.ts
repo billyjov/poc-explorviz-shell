@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import {
   Component,
   Directive,
@@ -98,8 +99,10 @@ export class AppComponent implements OnInit, OnDestroy {
 
   @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>;
 
+  constructor(private http: HttpClient) {}
+
   ngOnInit() {
-    this.filteredTraces = this.landscapeData.dynamicLandscapeData;
+    this.initLandscapeData();
 
     this.subscriptions.add(
       this.filter.valueChanges
@@ -113,6 +116,21 @@ export class AppComponent implements OnInit, OnDestroy {
         )
         .subscribe()
     );
+  }
+
+  private initLandscapeData(): void {
+    if (!this.isShellPresent) {
+      this.subscriptions.add(
+        this.http
+          .get<any>('../assets/mocks/landscape-data.json')
+          .subscribe((data: LandscapeData) => {
+            this.landscapeData = data;
+            this.filteredTraces = this.landscapeData?.dynamicLandscapeData;
+          })
+      );
+    } else {
+      this.filteredTraces = this.landscapeData?.dynamicLandscapeData;
+    }
   }
 
   ngOnDestroy() {
@@ -156,12 +174,12 @@ export class AppComponent implements OnInit, OnDestroy {
     );
 
     const hashCodeToClassInLandscapeMap = getHashCodeToClassMap(
-      this.landscapeData.structureLandscapeData
+      this.landscapeData?.structureLandscapeData
     );
 
     const traceIdToFirstClassMap = new Map<string, Class>();
 
-    this.applicationTraces.forEach((trace, index) => {
+    this.applicationTraces?.forEach((trace, index) => {
       const spanList = sortedSpanLists[index];
 
       const firstClassHashCode = spanList[0].hashCode;
@@ -184,7 +202,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
     const traceIdToLastClassMap = new Map<string, Class>();
 
-    this.applicationTraces.forEach((trace, index) => {
+    this.applicationTraces?.forEach((trace, index) => {
       const spanList = sortedSpanLists[index];
 
       const lastClassHashCode = spanList[spanList.length - 1].hashCode;
@@ -198,10 +216,10 @@ export class AppComponent implements OnInit, OnDestroy {
 
   private get applicationTraces() {
     const hashCodeToClassMap = getHashCodeToClassMap(
-      this.landscapeData.application
+      this.landscapeData?.application
     );
 
-    return this.landscapeData.dynamicLandscapeData.filter((trace) =>
+    return this.landscapeData?.dynamicLandscapeData.filter((trace) =>
       trace.spanList.some(
         (span) => hashCodeToClassMap.get(span.hashCode) !== undefined
       )
@@ -227,7 +245,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
     const filteredTraces: Trace[] = [];
     const filter = this.filterTerm;
-    this.applicationTraces.forEach((trace) => {
+    this.applicationTraces?.forEach((trace) => {
       if (filter === '' || trace.traceId.toLowerCase().includes(filter)) {
         filteredTraces.push(trace);
         return;
@@ -304,7 +322,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   onSort({ column, direction }: SortEvent) {
     // resetting other headers
-    this.headers.forEach((header) => {
+    this.headers?.forEach((header) => {
       if (header.sortable !== column) {
         header.direction = '';
       }

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
@@ -19,7 +20,7 @@ import { TraceStepsDetailsComponent } from './trace-steps-details/trace-steps-de
     TraceNavigationComponent,
     TraceStepsDetailsComponent,
   ],
-  imports: [BrowserModule, NgbModule, ReactiveFormsModule],
+  imports: [BrowserModule, NgbModule, ReactiveFormsModule, HttpClientModule],
   providers: [],
   bootstrap: [AppComponent],
 })
