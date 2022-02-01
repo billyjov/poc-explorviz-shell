@@ -1,21 +1,25 @@
 <div [ngClass]="{'p-5': !isShellPresent}">
   <form>
     <div class="form-group form-inline">
-      <input class="form-control ml-auto" type="text" placeholder="Filter traces"
-        [formControl]="filter" />
+      <input class="form-control ml-auto" type="text"
+        placeholder="Filter traces" [formControl]="filter" />
     </div>
   </form>
   <table class="table table-striped">
     <thead>
       <tr>
-        <th scope="col" sortable="traceId" (sort)="onSort($event)">Trace ID</th>
-        <th scope="col" sortable="firstClazz" (sort)="onSort($event)">
+        <th scope="col" sortable="traceId" (sort)="onSort($event)"
+          data-cy="traceId">Trace ID</th>
+        <th scope="col" sortable="firstClazz" (sort)="onSort($event)"
+          data-cy="firstClazz">
           First Clazz
         </th>
-        <th scope="col" sortable="lastClazz" (sort)="onSort($event)">
+        <th scope="col" sortable="lastClazz" (sort)="onSort($event)"
+          data-cy="lastClazz">
           Last Clazz
         </th>
-        <th scope="col" sortable="duration" (sort)="onSort($event)">
+        <th scope="col" sortable="duration" (sort)="onSort($event)"
+          data-cy="duration">
           Duration in
           <br>
           <button (click)="toggleTraceTimeUnit()"
@@ -28,7 +32,7 @@
     <tbody>
       <ng-container *ngFor="let trace of filteredTraces; let i = index">
         <tr (click)="selectTrace(trace)"
-          [hidden]="selectedTrace && selectedTrace.traceId !== trace.traceId">
+          [hidden]="selectedTrace && selectedTrace.traceId !== trace.traceId" data-cy="trace-row">
           <th scope="row">{{ trace.traceId }}</th>
           <td>{{ getFirstClass(trace.traceId)?.name }}</td>
           <td>{{ getLastClass(trace.traceId)?.name }}</td>
