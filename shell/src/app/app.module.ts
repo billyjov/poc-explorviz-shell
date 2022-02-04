@@ -1,4 +1,5 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { LazyElementsModule } from '@angular-extensions/elements';
@@ -10,7 +11,6 @@ import { LoginComponent } from './login/login.component';
 import { CallbackComponent } from './callback/callback.component';
 import { VisualizationComponent } from './visualization/visualization.component';
 import { ShellOutletModule } from './shell-outlet/shell-outlet.module';
-
 
 @NgModule({
   declarations: [
@@ -25,10 +25,10 @@ import { ShellOutletModule } from './shell-outlet/shell-outlet.module';
     ShellOutletModule,
     AppRoutingModule,
     NgbModule,
+    HttpClientModule,
   ],
   providers: [],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
-
+export class AppModule {}
