@@ -91,9 +91,12 @@ npm run build:all:prod
 npm run build:all:prod
 ```
 
-
-
 ### 🚨 Testing
+
+- For most of the app: `npm run test` will run unit tests
+- `npm run e2e` will run e2e tests
+
+Check out app specific `README.md` files for more instructions. 
 
 ## 📚 Apps and libs
 
@@ -105,7 +108,7 @@ npm run build:all:prod
 | [Visualization](./visualization) | EmberJS/TypeScript   | -               |
 | [Trace](./trace)                 | Angular/TypeScript   | -               |
 
-## INFOS
+## Package INFOS
 
 ---
 
@@ -113,6 +116,20 @@ npm run build:all:prod
 
 - For concat ember JS and CSS files im using [Ember cli concat](https://github.com/sir-dunxalot/ember-cli-concat)
 
+- For Ember custom elements: [Ember custom elements](https://github.com/Ravenstine/ember-custom-elements) and [Ember custom elements patch](https://github.com/billyjov/ember-custom-elements)
+
+## Some issues found
+
 #### Cannot embed app into another:
 
 - https://stackoverflow.com/a/47391372/6432698
+
+
+## ExplorViz monolithic frontend
+
+- https://github.com/ExplorViz/explorviz-frontend/tree/dev
+
+
+## ExplorViz Backend microservices
+
+- https://github.com/ExplorViz
