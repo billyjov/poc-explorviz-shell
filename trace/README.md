@@ -1,7 +1,7 @@
 # Micro-Frontend 'Trace'
 
 
-### Start app
+## Start app
 
 ```bash
 npm run start 
@@ -10,19 +10,26 @@ npm run start
 Browse `http://localhost:4500`
 
 
-### Build 
+## Build 
 
 ```bash
 npm run build
 ```
 
-### Unit tests
+## Unit tests
 
 ```bash
 npm run test
 ```
 
-### Communication Messages
+## Cypress e2e Tests
+
+```bash
+npm run e2e
+```
+
+## Communication Messages
+
 
 | Message Name | Message Key | Initiator |  
 | --- | --- | ---| 
