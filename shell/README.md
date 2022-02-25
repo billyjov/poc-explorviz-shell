@@ -1,5 +1,10 @@
 # Application Shell Micro-Frontend
 
+
+## Module federation config
+
+Use `webpack.config.js` and `webpack.prod.config.js` to adjust or add new module federation configs 
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
@@ -18,7 +23,7 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 
 ## Running end-to-end tests
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+Run `ng e2e` to execute the end-to-end tests via Cypress.
 
 ## Further help
 

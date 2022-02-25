@@ -58,3 +58,8 @@ Specify what it takes to deploy your app.
 | Message Name                  | Message Key                            | Initiator                       |
 | ----------------------------- | -------------------------------------- | ------------------------------- |
 | _Navigation to visualization_ | `landscapes:navigate-to-visualization` | _app/controllers/landscapes.ts_ |
+
+
+## Backend 
+
+Adjust your URL for backend based on your environment inside `config/backend-addresses`;

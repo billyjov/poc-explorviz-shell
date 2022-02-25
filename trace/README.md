@@ -28,6 +28,10 @@ npm run test
 npm run e2e
 ```
 
+## Module federation config
+
+Use `webpack.config.js` and `webpack.prod.config.js` to adjust or add new module federation configs 
+
 ## Communication Messages
 
 

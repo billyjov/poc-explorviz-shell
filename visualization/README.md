@@ -58,3 +58,7 @@ Specify what it takes to deploy your app.
 | Message Name   | Message Key                  | Initiator                          |
 | -------------- | ---------------------------- | ---------------------------------- |
 | _Open Sidebar_ | `visualization:open-sidebar` | _app/controllers/visualization.ts_ |
+
+## Backend 
+
+Adjust your URL for backend based on your environment inside `config/backend-addresses`;
