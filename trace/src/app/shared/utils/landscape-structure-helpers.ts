@@ -71,6 +71,7 @@ export function getHashCodeToClassMap(
 
   if (isApplication(structureData)) {
     classList = getAllClassesInApplication(structureData);
+    console.warn('here app: ', classList)
   } else {
     classList = structureData?.nodes
       .map((node) =>

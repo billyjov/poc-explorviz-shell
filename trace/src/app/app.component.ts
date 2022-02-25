@@ -142,7 +142,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   get traceDurations() {
-    return this.traces.map((trace) => calculateDuration(trace));
+    return this.traces?.map((trace) => calculateDuration(trace));
   }
 
   public selectTrace(trace: Trace): void {
@@ -157,6 +157,8 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   public getFirstClass(id: string) {
+    // console.log('id: ', id);
+    // console.log('first: ', this.firstClasses);
     return getValueOfMap([this.firstClasses, id]);
   }
 
