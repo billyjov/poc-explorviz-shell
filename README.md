@@ -108,6 +108,11 @@ Check out app specific `README.md` files for more instructions.
 | [Visualization](./visualization) | EmberJS/TypeScript   | -               |
 | [Trace](./trace)                 | Angular/TypeScript   | -               |
 
+## NOTES
+
+The entry point of the app micro-frontend is the shell. After building or starting different apps,
+Shell app should be browse.
+
 ## Package INFOS
 
 ---

@@ -41,6 +41,12 @@ Make use of the many generators for code, try `ember help generate` for more det
 - `ember build` (development)
 - `ember build --environment production` (production)
 
+
+**IMPORTANT!!!**
+
+Make sure the option `autoboot` is set to `false` either inside your `app.js` or inside 
+your `environment.js` before build the app as custom element to prevent duplicated boot.
+
 ### Deploying
 
 Specify what it takes to deploy your app.
